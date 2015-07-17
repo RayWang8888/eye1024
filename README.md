@@ -1,1 +1,1 @@
-[程序员之眼](http://www.1024eye.com)的Android客户端，界面使用了[material](https://github.com/rey5137/material)框架，由于服务器流量有限，所以此源码和上线的正式版本调用的接口有差别，开放的接口每天只接受500次请求，超过500就不会返回数据，目前只有最基本的功能，因为时间比较少（空闲时间），所以以后会慢慢添加各种功能
+[程序员之眼](http://www.1024eye.com)的Android客户端，界面使用了[material](https://github.com/rey5137/material)框架，以及[LDrawer](https://github.com/ikimuhendis/LDrawer)由于服务器流量有限，所以此源码和上线的正式版本调用的接口有差别，开放的接口每天只接受500次请求，超过500就不会返回数据，目前只有最基本的功能，因为时间比较少（空闲时间），所以以后会慢慢添加各种功能
