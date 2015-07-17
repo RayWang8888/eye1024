@@ -41,6 +41,15 @@
     <include layout="@layout/divider" />
 
     <com.rey.material.widget.Button
+        android:id="@+id/evaluation"
+        style="@style/FlatWaveColorButtonRippleStyle"
+        android:background="@null"
+        android:text="@string/evaluation" />
+
+
+    <include layout="@layout/divider" />
+
+    <com.rey.material.widget.Button
         android:id="@+id/about"
         style="@style/FlatWaveColorButtonRippleStyle"
         android:background="@null"

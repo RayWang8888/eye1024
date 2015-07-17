@@ -1,12 +1,10 @@
 package com.eye1024.ui.fragment;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +13,11 @@ import com.eye1024.app.R;
 import com.eye1024.ui.AboutActivity;
 import com.eye1024.util.ImageLoadIni;
 import com.nostra13.universalimageloader.cache.disc.DiskCache;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.qq.e.appwall.GdtAppwall;
 import com.raywang.fragment.BaseFragment;
 import com.raywang.rayutils.SharedPreferencesUtil;
 import com.raywang.rayutils.UIHlep;
-import com.raywang.rayutils.Util;
 import com.rey.material.widget.Button;
-import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.Switch;
 
 import java.io.File;
@@ -34,6 +28,11 @@ import java.io.File;
  */
 public class MenuFragment extends BaseFragment {
 
+    static{
+        System.loadLibrary("Token");
+    }
+    public native String getAPPID();
+    public native String getPOITID();
     private Button clean;
 
     private DiskCache diskCache = null;
@@ -73,8 +72,9 @@ public class MenuFragment extends BaseFragment {
 
         view.findViewById(R.id.exit).setOnClickListener(this);
         view.findViewById(R.id.ad).setOnClickListener(this);
-
-        appwall = new GdtAppwall(getActivity(),"1104770080","4090502591434214", false);
+        view.findViewById(R.id.evaluation).setOnClickListener(this);
+        //1104770080   4090502591434214
+        appwall = new GdtAppwall(getActivity(),getAPPID(),getPOITID(), false);
 
         showImg = (Switch) view.findViewById(R.id.showImg);
         showImg.setChecked(util.getBoolean("showImg", true));
@@ -107,6 +107,12 @@ public class MenuFragment extends BaseFragment {
                 break;
             case R.id.ad:
                 appwall.doShowAppWall();
+                break;
+            case R.id.evaluation:
+                Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
+                Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent1.createChooser(intent1,"选择市场"));
                 break;
             default:
                 super.click(id);
