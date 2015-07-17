@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
 
-        applicationId "com.eye1024"
+        applicationId "com.eye1024.app"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
