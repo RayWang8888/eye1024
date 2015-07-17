@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--普通的head布局-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="@dimen/abc_action_bar_stacked_max_height"
+    android:background="@color/main_color"
+    android:gravity="center_vertical">
+    <com.rey.material.widget.TextView
+        style="@style/TextHeadStyle"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:drawableLeft="@drawable/iconfont_back"
+        android:id="@+id/back"
+        android:paddingLeft="@dimen/head_margin"
+        android:drawablePadding="@dimen/head_margin"
+        android:layout_weight="4"
+        android:gravity="center_vertical"
+        android:textColor="@color/head_text"
+        android:textSize="@dimen/head_text_size"/>
+
+    <com.rey.material.widget.TextView
+        style="@style/TextHeadStyle"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:id="@+id/menu"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textColor="@color/head_text"
+        android:textSize="@dimen/head_text_size"/>
+</LinearLayout>

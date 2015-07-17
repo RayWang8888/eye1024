@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/menu_bg"
+    android:focusable="true"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/main_padding">
+
+    <RelativeLayout style="@style/match_width.menuRe">
+
+        <TextView
+            style="@style/menu_setting_text"
+            android:text="@string/is_show_img" />
+
+        <com.rey.material.widget.Switch
+            android:id="@+id/showImg"
+            style="@style/menu_switch"
+            android:checked="true"/>
+    </RelativeLayout>
+
+    <include layout="@layout/divider" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/clean"
+        style="@style/FlatWaveColorButtonRippleStyle"
+        android:background="@null"
+        android:text="@string/cache_size" />
+
+
+    <include layout="@layout/divider" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/ad"
+        style="@style/FlatWaveColorButtonRippleStyle"
+        android:background="@null"
+        android:text="@string/ad" />
+
+
+    <include layout="@layout/divider" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/about"
+        style="@style/FlatWaveColorButtonRippleStyle"
+        android:background="@null"
+        android:text="@string/about" />
+
+    <include layout="@layout/divider" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/exit"
+        style="@style/FlatWaveColorButtonRippleStyle"
+        android:background="@null"
+        android:text="@string/exit" />
+
+    <include layout="@layout/divider" />
+</LinearLayout>

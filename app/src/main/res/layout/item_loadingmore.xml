@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--加载更多的布局-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center" android:padding="@dimen/main_padding"
+    android:id="@+id/loadmore">
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/progress"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="center"
+        app:pv_autostart = "false"
+        app:pv_circular="true"
+        app:pv_progressStyle="@style/CircularProgressDrawableStyle"
+        app:pv_progressMode="indeterminate"/>
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@id/progress"
+        android:text="@string/loading"
+        android:textSize="@dimen/main_state"
+        android:textColor="@color/main_text_color"/>
+
+
+</RelativeLayout>

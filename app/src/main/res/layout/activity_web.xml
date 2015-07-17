@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.eye1024.ui.WebActivity"
+    android:background="@color/main_color">
+    <include layout="@layout/item_head" />
+
+    <com.rey.material.widget.ProgressView
+        android:layout_width="match_parent"
+        android:layout_height="1dip" />
+
+
+
+    <WebView style="@style/match_parent"
+        android:id="@+id/webView"
+        android:layout_marginTop="@dimen/abc_action_bar_stacked_max_height"/>
+
+    <com.rey.material.widget.ProgressView
+        android:layout_marginTop="@dimen/abc_action_bar_stacked_max_height"
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        app:pv_autostart = "false"
+        app:pv_circular="false"
+        app:pv_progressStyle="@style/QueryLinearProgressDrawableStyle"
+        app:pv_progressMode="query"/>
+</FrameLayout>

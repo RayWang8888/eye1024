@@ -1,0 +1,113 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="MainActivityTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="colorPrimary">@color/main_color</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <item name="colorControlActivated">@color/colorControlActivated</item>
+        <item name="colorSwitchThumbNormal">@color/colorSwitchThumbNormal</item>
+        <item name="android:activityOpenExitAnimation">@anim/abc_slide_in_bottom</item>
+        <item name="android:activityCloseEnterAnimation">@anim/abc_slide_out_top</item>
+        <item name="android:activityCloseExitAnimation">@anim/abc_slide_out_top</item>
+    </style>
+
+    <style name="wrap_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="match_parent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="match_width">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="match_width.menuRe">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/main_padding</item>
+        <item name="android:paddingBottom">@dimen/main_padding</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <style name="nowidth_wrapheight">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--TabPage的样式-->
+    <style name="TabPageIndicator" parent="Material.Widget.TabPageIndicator.Light">
+        <item name="tpi_tabPadding">12dp</item>
+        <item name="tpi_tabRipple">@style/TabRippleStyle</item>
+        <item name="tpi_indicatorHeight">3dp</item>
+        <item name="android:textAppearance">@style/TabTextAppearance</item>
+        <item name="tpi_mode">scroll</item>
+    </style>
+
+    <style name="TabRippleStyle" parent="Material.Drawable.Ripple.Wave">
+        <item name="android:background">@null</item>
+        <item name="rd_rippleColor">#43CD80</item>
+        <item name="rd_rippleAnimDuration">200</item>
+        <item name="rd_maskType">rectangle</item>
+        <item name="rd_cornerRadius">0dp</item>
+        <item name="rd_padding">0dp</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="@style/Base.TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@drawable/color_tpi</item>
+    </style>
+
+    <!-- 进度圈的样式-->
+    <style name="CircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/main_color</item>
+    </style>
+
+
+    <!-- 菜单的checkbox样式-->
+    <style name="menu_setting_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:textSize">@dimen/menu_text_size</item>
+    </style>
+
+    <!--菜单的按钮样式-->
+    <style name="FlatWaveColorButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">
+        <item name="android:background">@null</item>
+        <item name="rd_rippleColor">#43CD80</item>
+        <item name="rd_cornerRadius">4dp</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:textSize">@dimen/menu_text_size</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+
+    <!--Switch 的样式-->
+    <style name="menu_switch" parent="Material.Widget.Switch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--头部文本的样式-->
+    <style name="TextHeadStyle" parent="Material.Drawable.Ripple.Wave.Light">
+        <item name="rd_rippleColor">#43CD80</item>
+    </style>
+
+    <style name="QueryLinearProgressDrawableStyle" parent="Material.Drawable.LinearProgress.Query">
+        <item name="lpd_strokeColor">#36456E</item>
+        <item name="lpd_strokeSecondaryColor">#ffffff</item>
+    </style>
+</resources>

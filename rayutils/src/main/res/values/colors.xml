@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--常用的一些颜色-->
+    <color name="main_text_color">#333333</color>
+    <color name="state_text_color">#757575</color>
+    <color name="alert_text_color">#999999</color>
+    <color name="enabled_text_color">#b3b3b3</color>
+
+    <color name="divider">#b3b3b3</color>
+</resources>

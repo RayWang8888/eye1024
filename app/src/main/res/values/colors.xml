@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="menu_selected">#eeeeee</color>
+    <color name="main_color">#248528</color>
+    <color name="head_text">#ffffff</color>
+    <color name="menu_bg">#ffffff</color>
+
+    <color name="tpi_checked">#ffffff</color>
+    <color name="tpi_unchecked">#FFFff5</color>
+
+    <color name="switch_check">@color/main_color</color>
+    <color name="switch_uncheck">#fffff5</color>
+
+
+
+    <color name="colorPrimaryDark">@color/main_color</color>
+    <color name="colorAccent">#fffff5</color>
+    <color name="colorControlNormal">#FF78909C</color>
+    <color name="colorControlActivated">#43CD80</color>
+    <color name="colorSwitchThumbNormal">#FF78909C</color>
+</resources>

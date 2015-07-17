@@ -1,0 +1,35 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    android:orientation="vertical"
+    android:background="@color/main_color">
+
+    <!--内容-->
+    <RelativeLayout
+        android:id="@+id/mainContent"
+        style="@style/match_parent"
+        android:paddingTop="@dimen/main_content_padding">
+        <com.rey.material.widget.TabPageIndicator
+            style="@style/TabPageIndicator"
+            android:id="@+id/main_tpi"
+            android:layout_height="@dimen/head_height"
+            android:layout_width="match_parent"
+            android:clipToPadding="false"
+            android:background="@color/main_color"/>
+        <android.support.v4.view.ViewPager style="@style/match_parent"
+            android:id="@+id/pager"
+            android:layout_below="@id/main_tpi" />
+    </RelativeLayout>
+
+    <!--左边滑出来的菜单-->
+    <FrameLayout
+        android:id="@+id/leftMenu"
+        android:paddingTop="@dimen/main_content_padding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/menu_bg"/>
+
+
+</android.support.v4.widget.DrawerLayout>

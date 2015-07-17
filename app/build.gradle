@@ -1,0 +1,30 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+
+        applicationId "com.eye1024"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile project(':lib')
+    compile project(':rayutils')
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:support-v13:22.2.0'
+    compile files('libs/universal-image-loader-1.9.4-with-sources.jar')
+    compile files('libs/gdt_mob_release_v4.4.479.jar')
+    compile files('libs/testinagent.jar')
+}

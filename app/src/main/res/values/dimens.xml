@@ -1,0 +1,32 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="left_menu_width">200dip</dimen>
+
+    <dimen name="head_height">40dip</dimen>
+
+    <dimen name="main_padding">8dip</dimen>
+    <dimen name="main_margin">8dip</dimen>
+
+    <dimen name="head_margin">16dip</dimen>
+
+    <dimen name="min_item_height">80dip</dimen>
+
+    <!--主要的文字大小-->
+    <dimen name="main_text">14sp</dimen>
+    <!--主要的提示文字大小-->
+    <dimen name="main_state">12sp</dimen>
+
+    <!--非重要信息文字大小-->
+    <dimen name="alert_text">10sp</dimen>
+
+    <!--菜单的字体-->
+    <dimen name="menu_text_size">16sp</dimen>
+
+    <dimen name="main_content_padding">0dip</dimen>
+
+    <!--顶部栏的文字大小-->
+    <dimen name="head_text_size">22sp</dimen>
+</resources>

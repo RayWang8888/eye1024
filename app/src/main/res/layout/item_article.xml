@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/min_item_height"
+    android:padding="@dimen/main_padding"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        style="@style/nowidth_wrapheight"
+        android:layout_weight="1"
+        android:layout_marginRight="@dimen/main_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/wrap_content"
+            android:textSize="@dimen/main_text"
+            android:ellipsize="end"
+            android:textColor="@color/main_text_color"
+            android:lines="2"/>
+
+        <TextView
+            android:id="@+id/desc"
+            style="@style/wrap_content"
+            android:layout_below="@id/title"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/main_state"
+            android:ellipsize="end"
+            android:lines="3"
+            />
+
+        <TextView
+            android:id="@+id/from"
+            style="@style/wrap_content"
+            android:layout_below="@id/desc"
+            android:textColor="@color/state_text_color"
+            android:textSize="@dimen/alert_text"/>
+    </RelativeLayout>
+
+    <!--com.raywang.view.ProportionImageView-->
+    <com.raywang.view.ProportionImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/min_item_height"
+        android:layout_height="@dimen/min_item_height"
+        android:visibility="gone" />
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <!-- inherit from the material theme -->
+        <style name="MainActivityTheme" parent="android:Theme.Material">
+            <!-- Main theme colors -->
+            <!--   your app branding color for the app bar -->
+            <item name="android:colorPrimary">@color/main_color</item>
+            <!--   darker variant for the status bar and contextual app bars -->
+            <item name="android:colorPrimaryDark">@color/main_color</item>
+            <!--   theme UI controls like checkboxes and text fields
+            <item name="android:colorAccent">@color/main_color</item> -->
+            <item name="android:colorAccent">#ffffff</item>
+            <item name="android:activityOpenExitAnimation">@anim/abc_slide_in_bottom</item>
+            <item name="android:activityCloseEnterAnimation">@anim/abc_slide_out_top</item>
+            <item name="android:activityCloseExitAnimation">@anim/abc_slide_out_top</item>
+
+            <item name="colorPrimary">@color/main_color</item>
+            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+            <item name="colorAccent">@color/colorAccent</item>
+            <item name="colorControlNormal">@color/colorControlNormal</item>
+            <item name="colorControlActivated">@color/colorControlActivated</item>
+            <item name="colorSwitchThumbNormal">@color/colorSwitchThumbNormal</item>
+        </style>
+</resources>
