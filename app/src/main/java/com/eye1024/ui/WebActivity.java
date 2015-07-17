@@ -55,6 +55,8 @@ public class WebActivity extends BaseActivity {
 
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setJavaScriptEnabled(true);
+        //防止WebView远程代码执行（CVE-2014-1939）bug
+        web.removeJavascriptInterface("searchBoxJavaBredge_");
         web.loadUrl(ApiURL.HOST+ApiURL.GETARTICLE+"?url="+article.getUrl());
 
         web.setWebViewClient(new WebViewClient());
