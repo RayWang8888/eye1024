@@ -11,6 +11,6 @@ public class MyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        TestinAgent.init(this, "c82b37f509c0e6bfe9fca04b8933abed", "qq");
+        TestinAgent.init(this, "6580ec30b90dbe701cb7657d3978f7e2", "qq");
     }
 }

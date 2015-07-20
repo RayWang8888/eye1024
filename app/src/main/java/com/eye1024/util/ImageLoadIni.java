@@ -2,7 +2,7 @@ package com.eye1024.util;
 
 import android.content.Context;
 
-import com.eye1024.app.R;
+import com.eye1024.R;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

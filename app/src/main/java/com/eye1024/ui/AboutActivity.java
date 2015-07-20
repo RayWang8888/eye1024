@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.TextView;
 
-
-import com.eye1024.app.BuildConfig;
-import com.eye1024.app.R;
+import com.eye1024.BuildConfig;
+import com.eye1024.R;
+import com.eye1024.api.SettingName;
 import com.raywang.activity.BaseActivity;
+import com.raywang.rayutils.SharedPreferencesUtil;
 
 /**
  * 关于的Activity
@@ -17,7 +18,9 @@ public class AboutActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        if(SharedPreferencesUtil.newInstance(this).getBoolean(SettingName.ISBLACK,false)){
+            setTheme(R.style.BlackMainActivityTheme);
+        }
         super.onCreate(savedInstanceState, R.layout.activity_about,true);
     }
 

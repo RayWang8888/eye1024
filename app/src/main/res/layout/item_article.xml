@@ -17,14 +17,14 @@
             style="@style/wrap_content"
             android:textSize="@dimen/main_text"
             android:ellipsize="end"
-            android:textColor="@color/main_text_color"
+            android:textColor="?main_text_color"
             android:lines="2"/>
 
         <TextView
             android:id="@+id/desc"
             style="@style/wrap_content"
             android:layout_below="@id/title"
-            android:textColor="@color/main_text_color"
+            android:textColor="?main_text_color"
             android:textSize="@dimen/main_state"
             android:ellipsize="end"
             android:lines="3"
@@ -34,7 +34,7 @@
             android:id="@+id/from"
             style="@style/wrap_content"
             android:layout_below="@id/desc"
-            android:textColor="@color/state_text_color"
+            android:textColor="?main_text_color"
             android:textSize="@dimen/alert_text"/>
     </RelativeLayout>
 

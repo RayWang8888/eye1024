@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menu_bg"
+    android:background="?content_bg"
     android:focusable="true"
     android:clickable="true"
     android:orientation="vertical"
@@ -18,6 +18,20 @@
             android:id="@+id/showImg"
             style="@style/menu_switch"
             android:checked="true"/>
+    </RelativeLayout>
+
+    <include layout="@layout/divider" />
+
+    <RelativeLayout style="@style/match_width.menuRe">
+
+        <TextView
+            style="@style/menu_setting_text"
+            android:text="@string/is_black" />
+
+        <com.rey.material.widget.Switch
+            android:id="@+id/isBlack"
+            style="@style/menu_switch"
+            android:checked="false"/>
     </RelativeLayout>
 
     <include layout="@layout/divider" />

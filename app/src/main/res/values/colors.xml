@@ -6,6 +6,9 @@
     <color name="head_text">#ffffff</color>
     <color name="menu_bg">#ffffff</color>
 
+    <color name="white">#ffffff</color>
+    <color name="black_bg">#333333</color>
+
     <color name="tpi_checked">#ffffff</color>
     <color name="tpi_unchecked">#FFFff5</color>
 
@@ -19,4 +22,10 @@
     <color name="colorControlNormal">#FF78909C</color>
     <color name="colorControlActivated">#43CD80</color>
     <color name="colorSwitchThumbNormal">#FF78909C</color>
+
+    <color name="read_main_text_color">#757575</color>
+
+    <!--主题的样式颜色-->
+    <color name="black_main_text_color">#ffffff</color>
+    <color name="black_read_text_color">#cccccc</color>
 </resources>

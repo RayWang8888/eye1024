@@ -24,5 +24,44 @@
             <!--   theme UI controls like checkboxes and text fields
             <item name="android:colorAccent">@color/main_color</item> -->
             <item name="android:colorAccent">@color/colorAccent</item>
+
+            <!--主题的样式-->
+            <item name="content_bg">@color/white</item>
+            <item name="main_text_color">@color/main_text_color</item>
+            <item name="read_text_color">@color/state_text_color</item>
+            <item name="menu_text_color">@color/main_text_color</item>
         </style>
+
+
+    <!-- inherit from the material theme -->
+    <style name="BlackMainActivityTheme" parent="android:Theme.Material">
+        <!-- Main theme colors -->
+
+
+        <item name="android:activityOpenExitAnimation">@anim/abc_slide_in_bottom</item>
+        <item name="android:activityCloseEnterAnimation">@anim/abc_slide_out_top</item>
+        <item name="android:activityCloseExitAnimation">@anim/abc_slide_out_top</item>
+
+        <item name="colorPrimary">@color/main_color</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:colorControlNormal">@color/colorControlNormal</item>
+        <item name="android:colorControlActivated">@color/colorControlActivated</item>
+        <item name="colorSwitchThumbNormal">@color/colorSwitchThumbNormal</item>
+
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/main_color</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/main_color</item>
+        <!--   theme UI controls like checkboxes and text fields
+        <item name="android:colorAccent">@color/main_color</item> -->
+        <item name="android:colorAccent">@color/colorAccent</item>
+
+        <!--主题的样式-->
+        <item name="content_bg">@color/black_bg</item>
+        <item name="main_text_color">@color/black_main_text_color</item>
+        <item name="menu_text_color">@color/black_main_text_color</item>
+        <item name="read_text_color">@color/black_read_text_color</item>
+    </style>
 </resources>

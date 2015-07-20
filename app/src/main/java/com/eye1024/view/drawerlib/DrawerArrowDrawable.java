@@ -10,8 +10,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
-import com.eye1024.app.R;
-
+import com.eye1024.R;
 
 public abstract class DrawerArrowDrawable extends Drawable {
     private static final float ARROW_HEAD_ANGLE = (float) Math.toRadians(45.0D);

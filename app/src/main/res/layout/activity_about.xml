@@ -10,7 +10,7 @@
     <LinearLayout
         style="@style/match_parent"
         android:orientation="vertical"
-        android:background="#ffffff">
+        android:background="?content_bg">
 
 
         <TextView style="@style/wrap_content"
@@ -20,13 +20,15 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:id="@+id/version"
-            android:textColor="@color/main_text_color"/>
+            android:textColor="?main_text_color"/>
         <TextView style="@style/match_width"
             android:gravity="center"
+            android:textColor="?main_text_color"
             android:text="@string/about_msg"/>
 
         <TextView style="@style/match_width"
             android:gravity="center"
+            android:textColor="?read_text_color"
             android:text="@string/copyright"
             android:layout_margin="@dimen/main_margin"/>
     </LinearLayout>

@@ -11,6 +11,7 @@
     <string name="loading">加载中...</string>
     <string name="title_activity_web">WebActivity</string>
     <string name="is_show_img">显示图片</string>
+    <string name="is_black">夜间模式</string>
     <string name="cache_size">清除图片缓存</string>
     <string name="ad">更多应用--免费支持开发者</string>
     <string name="evaluation">去评分</string>

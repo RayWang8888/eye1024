@@ -9,8 +9,8 @@ android {
         applicationId "com.eye1024.app"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
     }
 
@@ -25,6 +25,6 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.android.support:support-v13:22.2.0'
     compile files('libs/universal-image-loader-1.9.4-with-sources.jar')
-    compile files('libs/gdt_mob_release_v4.4.479.jar')
     compile files('libs/testinagent.jar')
+    compile files('libs/YoumiSdk_v5.1.0_2015-04-01.jar')
 }

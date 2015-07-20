@@ -1,6 +1,8 @@
 package com.eye1024.ui.fragment;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,18 +10,20 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
+import com.eye1024.R;
 import com.eye1024.api.NetApi;
-import com.eye1024.app.R;
 import com.eye1024.bean.ArticleResult;
+import com.eye1024.db.ReadLogDao;
 import com.eye1024.ui.adapter.ArticleAdapter;
 import com.raywang.fragment.BaseFragment;
 import com.raywang.rayutils.UIHlep;
 import com.raywang.rayutils.Util;
 import com.raywang.view.SwipeRefListView;
 import com.rey.material.widget.ProgressView;
+
+import java.util.ArrayList;
 
 /**
  * 菜单的Fragment
@@ -49,6 +53,8 @@ public class ArticleFragment extends BaseFragment{
 
     private View loadmore;
 
+    private ReadLogDao logDao;
+
     /** 是否是第一次获取数据*/
     private boolean isFristGetData = true;
 
@@ -65,7 +71,7 @@ public class ArticleFragment extends BaseFragment{
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         typeid = getArguments().getInt("typeid");
-
+        logDao = new ReadLogDao(getActivity());
 
     }
 
@@ -88,13 +94,34 @@ public class ArticleFragment extends BaseFragment{
             async = null;
             page = 1;
         }
+        if(adapter != null){
+            adapter = null;
+        }
+        isFristGetData = true;
         super.onDestroy();
     }
+
+    @Override
+    public void onDestroyView() {
+        //停止异步任务
+        if(async != null){
+            async.cancel(true);
+            async = null;
+            page = 1;
+        }
+        if(adapter != null){
+            adapter = null;
+        }
+        isFristGetData = true;
+        super.onDestroyView();
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article,container,false);
+
         iniView(view);
         return view;
     }
@@ -187,6 +214,13 @@ public class ArticleFragment extends BaseFragment{
                         msg.setOnClickListener(ArticleFragment.this);
                     }
                 }else{
+                    //获取已经查看过的文章
+                    ArrayList<String> urls = new ArrayList<String>();
+                    for(ArticleResult.Article article : articleResult.getData()){
+                        urls.add(article.getUrl());
+                    }
+                    ArrayList<String> logs = logDao.findIsRead(urls);
+
                     //获取成功，计算最大页数
                     maxPage = articleResult.getCount() / ROWS;
                     if(articleResult.getCount() % ROWS != 0){
@@ -197,11 +231,14 @@ public class ArticleFragment extends BaseFragment{
                     refListView.setVisibility(View.VISIBLE);
                     if(adapter == null){
                         adapter = new ArticleAdapter(getActivity(),articleResult.getData());
+                        adapter.setReadLog(logs);
                         refListView.setAdapter(adapter);
                     }else{
                         if(page == 1){
+                            adapter.setReadLog(logs);
                             adapter.setData(articleResult.getData());
                         }else{
+                            adapter.addReadLog(logs);
                             adapter.addData(articleResult.getData());
                         }
                     }
@@ -211,6 +248,24 @@ public class ArticleFragment extends BaseFragment{
             }
         }
     }
+
+
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK && data != null){
+            addReadLog(data.getStringExtra("url"));
+        }
+        super.onActivityResult(requestCode,resultCode,data);
+    }
+
+   public void addReadLog(String url){
+       logDao.cacheReadLog(url);
+       if(adapter != null){
+           adapter.addReadUrl(url);
+       }
+   }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     @Override

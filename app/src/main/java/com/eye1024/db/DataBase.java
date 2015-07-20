@@ -14,7 +14,7 @@ public class DataBase extends SQLiteOpenHelper {
     /** 数据库文件的名称*/
     private final static String DBNAME = "data.db";
 
-    private final static int VERSION = 1;
+    private final static int VERSION = 2;
 
     public DataBase(Context context){
         super(context,DBNAME,null,VERSION);
@@ -32,6 +32,9 @@ public class DataBase extends SQLiteOpenHelper {
         // page>3都要删除，防止数据错乱，所以URL不能带page参数
         db.execSQL("create table if not exists article(content text,url varchar(200)," +
                 "lasttime varchar(20),page int)");
+        //已经看过的文章的缓存
+        db.execSQL("create table if not exists readlog(url varchar(200)," +
+                "lasttime varchar(20))");
         //插入分类的初始数据
         db.execSQL("insert into type(id,name) values(1,'文章')");
         db.execSQL("insert into type(id,name) values(2,'新闻')");
@@ -45,6 +48,8 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL("drop table if exists type");
         //删除文章的数据表
         db.execSQL("drop table if exists article");
+        //删除看过的文章缓存
+        db.execSQL("drop table if exists readlog");
         onCreate(db);
     }
 }

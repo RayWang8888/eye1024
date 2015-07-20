@@ -19,6 +19,7 @@ import java.util.ArrayList;
  */
 public class NetApi {
 
+
     /** 过期时间，24小时*/
     private static final long TYPEOVERDUETIME = 86400000;
 
@@ -61,17 +62,25 @@ public class NetApi {
                                                                   int page,int rows,boolean isRef){
         String url = ApiURL.HOST+ApiURL.GETARTICLELIST+"?type="+typeid+"&rows="+rows;
         ArticleDao dao = new ArticleDao(context);
+        ArticleResult result = null;
         String data = dao.findByUrl(url,page);
         if(data == null || isRef){
             data = HttpUtil.get(url+"&page="+page,null);
-            //缓存数据
-            dao.insert(data,url,page);
-            Util.logi("info","from internet");
+            if(data != null){
+                result = ArticleResult.parse(data);
+                if(Util.noNull(result.getErrcode())){
+                    //有错误
+                    return result;
+                }else{
+                    //缓存数据
+                    dao.insert(data,url,page);
+                }
+            }
         }else{
-            Util.logi("info","from data");
+
+            result = ArticleResult.parse(data);
         }
 
-        ArticleResult result = ArticleResult.parse(data);
 
         return result;
     }

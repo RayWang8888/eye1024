@@ -15,6 +15,9 @@
 
     <WebView style="@style/match_parent"
         android:id="@+id/webView"
+        android:background="?content_bg"
+        android:layerType="software"
+        android:scrollbars="vertical"
         android:layout_marginTop="@dimen/abc_action_bar_stacked_max_height"/>
 
     <com.rey.material.widget.ProgressView

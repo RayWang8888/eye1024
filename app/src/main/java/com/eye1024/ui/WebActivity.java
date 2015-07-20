@@ -1,18 +1,26 @@
 package com.eye1024.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.eye1024.R;
 import com.eye1024.api.ApiURL;
-import com.eye1024.app.R;
+import com.eye1024.api.SettingName;
 import com.eye1024.bean.ArticleResult;
 import com.raywang.activity.BaseActivity;
 import com.raywang.rayutils.SharedPreferencesUtil;
+import com.raywang.rayutils.Util;
 import com.rey.material.widget.ProgressView;
 
 /**
@@ -21,6 +29,8 @@ import com.rey.material.widget.ProgressView;
  * @date 2015年7月2日11:31:39
  */
 public class WebActivity extends BaseActivity {
+
+    private boolean isRead = false;
 
 
     private WebView web;
@@ -33,7 +43,8 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_web,true);
+        setTheme(R.style.BlackMainActivityTheme);
+        super.onCreate(savedInstanceState, R.layout.activity_web, true);
     }
 
     @Override
@@ -55,9 +66,13 @@ public class WebActivity extends BaseActivity {
 
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setJavaScriptEnabled(true);
-        //防止WebView远程代码执行（CVE-2014-1939）bug
         web.removeJavascriptInterface("searchBoxJavaBredge_");
-        web.loadUrl(ApiURL.HOST+ApiURL.GETARTICLE+"?url="+article.getUrl());
+        boolean isBlack = util.getBoolean(SettingName.ISBLACK,false);
+        if(isBlack){
+            web.setBackgroundColor(0);
+        }
+        web.loadUrl(ApiURL.HOST+ApiURL.GETARTICLE+"?url="+article.getUrl()
+               +"&isBlack="+isBlack);
 
         web.setWebViewClient(new WebViewClient());
         //加载完成后才加载图片
@@ -71,6 +86,7 @@ public class WebActivity extends BaseActivity {
         web.setWebViewClient(new WebViewClient(){
 
             public void onPageFinished(WebView view, String url) {
+                isRead = true;
                 progressView.setVisibility(View.GONE);
                 if(util.getBoolean("showImg",true)) {
                     web.getSettings().setBlockNetworkImage(false);
@@ -97,6 +113,11 @@ public class WebActivity extends BaseActivity {
     protected void click(int id) {
         switch (id){
             case R.id.back:
+                if(isRead){
+                    Intent intent = new Intent();
+                    intent.putExtra("url",article.getUrl());
+                    setResult(Activity.RESULT_OK,intent);
+                }
                 finish();
                 break;
             default:

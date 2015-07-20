@@ -3,16 +3,12 @@ package com.eye1024.ui;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.eye1024.app.R;
+import com.eye1024.R;
 import com.raywang.activity.BaseActivity;
 
 /**
@@ -42,7 +38,6 @@ public class LoadingActivity extends BaseActivity {
         View view = findViewById(R.id.img);
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.ini_anim);
         view.startAnimation(animation);
-
         handler.sendEmptyMessageDelayed(2,200);
 
 //        FrameLayout content = (FrameLayout) findViewById(R.id.content);

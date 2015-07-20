@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.eye1024.app.R;
+import com.eye1024.R;
 
 import org.w3c.dom.Text;
 

@@ -4,19 +4,20 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
-import android.os.Build;
+import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.os.Bundle;
 import android.view.View;
 
+import com.eye1024.R;
 import com.eye1024.api.NetApi;
 import com.eye1024.api.SettingName;
-import com.eye1024.app.R;
 import com.eye1024.bean.TypeResult;
+import com.eye1024.db.ReadLogDao;
 import com.eye1024.db.TypeDao;
 import com.eye1024.ui.fragment.ArticleFragment;
 import com.eye1024.ui.fragment.MenuFragment;
@@ -27,6 +28,8 @@ import com.raywang.rayutils.SharedPreferencesUtil;
 import com.raywang.rayutils.UIHlep;
 import com.raywang.rayutils.Util;
 import com.rey.material.widget.TabPageIndicator;
+
+import net.youmi.android.offers.OffersManager;
 
 import java.util.ArrayList;
 
@@ -65,11 +68,18 @@ public class MainActivity extends BaseActivity {
     private GetTypeAsync async;
 
     private long lastTime = 0;
+    private SharedPreferencesUtil util;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        util = SharedPreferencesUtil.newInstance(this);
+        if(util.getBoolean(SettingName.ISBLACK,false)){
+            setTheme(R.style.BlackMainActivityTheme);
+        }
         super.onCreate(savedInstanceState, R.layout.activity_main);
+        new ReadLogDao(this).deleteLog();
     }
+
 
     @Override
     protected void iniHead() {
@@ -114,6 +124,7 @@ public class MainActivity extends BaseActivity {
 
         };
         drawerLayout.setDrawerListener(mDrawerToggle);
+        drawerLayout.closeDrawer(mDrawerMenu);
         mDrawerToggle.syncState();
         super.iniHead();
     }
@@ -142,7 +153,6 @@ public class MainActivity extends BaseActivity {
         types = typeDao.findAll();
         fragments = new ArticleFragment[types.size()];
 
-        SharedPreferencesUtil util = SharedPreferencesUtil.newInstance(this);
         if(util.getLong(SettingName.TYPETIME) < System.currentTimeMillis() - TypeDao.OVERDUETIME){
             //分类数据超过1天了，需要重新获取
             async = new GetTypeAsync();
@@ -175,7 +185,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.leftMenu,menuFragment);
+        ft.replace(R.id.leftMenu, menuFragment);
         ft.commit();
     }
 
@@ -205,6 +215,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
 
 
     /**
@@ -264,10 +275,20 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        OffersManager.getInstance(this).onAppExit();
+        adapter = null;
+        pager = null;
+        menuFragment = null;
         if(async != null){
             async.cancel(true);
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        fragments[pager.getCurrentItem()].onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -276,8 +297,11 @@ public class MainActivity extends BaseActivity {
         if(time - 2000 > lastTime){
             lastTime = time;
             UIHlep.toast(this,R.string.exit_alert);
+//            Snackbar.make(pager,R.string.exit_alert,Snackbar.LENGTH_SHORT).show();
             return;
         }
         super.onBackPressed();
     }
+
+
 }
