@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.eye1024.R;
 import com.eye1024.api.SettingName;
 import com.eye1024.ui.AboutActivity;
+import com.eye1024.ui.CommendActivity;
 import com.eye1024.ui.MainActivity;
 import com.eye1024.util.ImageLoadIni;
 import com.nostra13.universalimageloader.cache.disc.DiskCache;
@@ -74,6 +75,7 @@ public class MenuFragment extends BaseFragment {
         view.findViewById(R.id.exit).setOnClickListener(this);
         view.findViewById(R.id.ad).setOnClickListener(this);
         view.findViewById(R.id.evaluation).setOnClickListener(this);
+        view.findViewById(R.id.commend).setOnClickListener(this);
         AdManager.getInstance(getActivity()).init("9d06deb924971b87", "3ae12aefb372e962");
 
         OffersManager.getInstance(getActivity()).onAppLaunch();
@@ -138,6 +140,10 @@ public class MenuFragment extends BaseFragment {
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent1.createChooser(intent1, "选择市场"));
 
+                break;
+            case R.id.commend:
+                Intent commend = new Intent(getActivity(), CommendActivity.class);
+                startActivity(commend);
                 break;
             default:
                 super.click(id);

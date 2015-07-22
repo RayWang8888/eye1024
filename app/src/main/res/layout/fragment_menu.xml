@@ -60,6 +60,14 @@
         android:background="@null"
         android:text="@string/evaluation" />
 
+    <include layout="@layout/divider" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/commend"
+        style="@style/FlatWaveColorButtonRippleStyle"
+        android:background="@null"
+        android:text="@string/commend" />
+
 
     <include layout="@layout/divider" />
 

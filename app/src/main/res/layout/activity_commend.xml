@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color">
+
+    <include layout="@layout/item_head"
+        android:id="@+id/head"/>
+
+    <LinearLayout style="@style/match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/head"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:background="?content_bg">
+        <com.rey.material.widget.EditText style="@style/Material.Widget.EditText.Light.MatchWidth"
+            android:maxLength="30"
+            android:id="@+id/email"
+            android:singleLine="true"
+            android:inputType="textWebEmailAddress"
+            android:hint="@string/email_hint"/>
+
+        <com.rey.material.widget.EditText style="@style/Material.Widget.EditText.Light.MatchWidth"
+            android:layout_marginTop="@dimen/main_margin"
+            android:id="@+id/nickname"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:hint="@string/nickname_hint"/>
+
+        <com.rey.material.widget.EditText style="@style/Material.Widget.EditText.Light.MatchWidth"
+            android:layout_marginTop="@dimen/main_margin"
+            android:id="@+id/commend"
+            android:maxLength="300"
+            android:hint="@string/commend_hint"/>
+        <com.rey.material.widget.Button style="@style/FlatWaveColorButtonRippleStyle.Button"
+            android:text="@string/ok"
+            android:id="@+id/ok"
+            android:layout_marginTop="@dimen/main_margin"/>
+    </LinearLayout>
+
+</RelativeLayout>

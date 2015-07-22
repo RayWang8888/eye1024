@@ -45,6 +45,9 @@
         <activity android:name=".ui.AboutActivity"
             android:theme="@style/MainActivityTheme"
             android:exported="false"></activity>
+        <activity android:name=".ui.CommendActivity"
+            android:theme="@style/MainActivityTheme"
+            android:exported="false"></activity>
 
         <!--广告的activity和service-->
         <activity

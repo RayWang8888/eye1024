@@ -12,6 +12,8 @@ public class ApiURL {
     public static final String TYPE = "/gettype.do";
     /** 获取文章列表*/
     public static final String GETARTICLELIST = "/article.do";
-
+    /** 获取文章详细*/
     public static final String GETARTICLE = "/getalert.do";
+    /** 意见与建议*/
+    public static final String COMMEND = "/commend.do";
 }

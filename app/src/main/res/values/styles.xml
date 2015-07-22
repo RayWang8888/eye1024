@@ -134,4 +134,16 @@
         <item name="lpd_strokeColor">#36456E</item>
         <item name="lpd_strokeSecondaryColor">#ffffff</item>
     </style>
+
+    <!--编辑框EditText的样式-->
+    <style name="Material.Widget.EditText.Light.MatchWidth">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--按钮的样式-->
+    <style name="FlatWaveColorButtonRippleStyle.Button" >
+        <item name="android:gravity">center</item>
+        <item name="android:background">#aaaaaa</item>
+    </style>
 </resources>

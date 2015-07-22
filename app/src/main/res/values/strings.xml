@@ -8,6 +8,8 @@
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
     <string name="net_error_msg">连接服务器失败，点击重试</string>
+    <string name="connet_error">连接服务器失败</string>
+    <string name="commend_success">建议成功，多谢您的建议，我会尽快查阅并修改的</string>
     <string name="loading">加载中...</string>
     <string name="title_activity_web">WebActivity</string>
     <string name="is_show_img">显示图片</string>
@@ -15,6 +17,11 @@
     <string name="cache_size">清除图片缓存</string>
     <string name="ad">更多应用--免费支持开发者</string>
     <string name="evaluation">去评分</string>
+    <string name="commend">评价与建议</string>
+    <string name="email_hint">EMail</string>
+    <string name="nickname_hint">昵称</string>
+    <string name="commend_hint">意见或建议</string>
+    <string name="ok">确定</string>
 
     <string name="nomark">你还没有安装任何应用市场哦</string>
     <string name="about">关于</string>
@@ -27,4 +34,6 @@
 
     <string name="copyright">Copyright © 1024eye.com All rights reserved</string>
     <string name="exit_alert">再次按back退出</string>
+    <string name="email_error">邮箱地址错误，请重新输入</string>
+    <string name="commend_error">必须输入意见或建议，谢谢</string>
 </resources>

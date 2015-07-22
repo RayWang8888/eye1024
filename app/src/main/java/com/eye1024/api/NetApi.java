@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.eye1024.bean.ArticleResult;
 import com.eye1024.bean.TypeResult;
+import com.eye1024.bean.WebResult;
 import com.eye1024.db.ArticleDao;
 import com.eye1024.db.TypeDao;
 import com.raywang.rayutils.HttpUtil;
@@ -11,6 +12,7 @@ import com.raywang.rayutils.SharedPreferencesUtil;
 import com.raywang.rayutils.Util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 获取网络数据的类，拥有多个静态获取数据的方法，但是会优先判断缓存是否过期，防止给服务器带来压力
@@ -85,4 +87,24 @@ public class NetApi {
         return result;
     }
 
+    /**
+     * 意见与建议的提交方法
+     * @param email
+     * @param nickname
+     * @param commend
+     * @return
+     */
+    public static WebResult commend(String email,String nickname,String commend){
+        String url = ApiURL.HOST+ApiURL.COMMEND;
+        HashMap<String,Object> data = new HashMap<String,Object>();
+        data.put("email",email);
+        data.put("nickname",nickname);
+        data.put("commend",commend);
+        String res = HttpUtil.post(url,data);
+        if(Util.noNull(res)){
+            WebResult result = WebResult.parse(res);
+            return result;
+        }
+        return null;
+    }
 }
