@@ -125,4 +125,9 @@ public class WebActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        click(R.id.back);
+    }
 }
