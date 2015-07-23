@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.eye1024.R;
 import com.eye1024.api.NetApi;
 import com.eye1024.bean.WebResult;
@@ -129,5 +130,17 @@ public class CommendActivity extends BaseActivity {
                 finish();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        StatService.onResume(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        StatService.onPause(this);
+        super.onPause();
     }
 }

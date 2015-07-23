@@ -6,23 +6,52 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 读写内存卡权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--BEGIN 崩溃记录的-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <!--END 崩溃记录-->
+    <!-- BEGIN 崩溃记录的 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
-    <application android:name=".MyApplication"
+    <!-- END 崩溃记录 -->
+    <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="Baidu Market" />
+        <!-- 您从百度网站获取的 APP KEY -->
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="jFfXOH5BvHuTyd6kBPeD7mrc" />
+        <!-- 以下是可选的 -->
+        <!-- 是否开启错误日志统计，默认为 false -->
+        <meta-data
+            android:name="BaiduMobAd_EXCEPTION_LOG"
+            android:value="true" />
+<!--  日志发送策略，可选值： APP_START、 ONCE_A_DAY、 SET_TIME_INTERVAL，默认为 APP_START -->
+        <meta-data
+            android:name="BaiduMobAd_SEND_STRATEGY"
+            android:value="APP_START" />
+        <!--
+        上面的日志发送策略 为 SET_TIME_INTERVAL 时，需设定时间间隔。取值为 1-24（小时） 的整
+        数，默认为 1
+        -->
+        <!-- <meta-data android:name="BaiduMobAd_TIME_INTERVAL" android:value="2" /> -->
+        <!-- 日志仅在 wifi 网络下发送，默认为 false -->
+        <meta-data
+            android:name="BaiduMobAd_ONLY_WIFI"
+            android:value="false" />
+        <!-- 是否获取基站位置信息，默认为 true(获取基站位置) -->
+        <!-- <meta-data android:name="BaiduMobAd_CELL_LOCATION" android:value="true" /> -->
         <activity
             android:name=".ui.LoadingActivity"
             android:label="@string/app_name"
-            android:theme="@style/LoadingTheme">
+            android:theme="@style/LoadingTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,30 +60,37 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
+            android:exported="false"
             android:label="@string/title_activity_main"
-            android:theme="@style/MainActivityTheme"
-            android:exported="false" >
+            android:theme="@style/MainActivityTheme" >
         </activity>
         <activity
             android:name=".ui.WebActivity"
-            android:label="@string/title_activity_web"
-            android:theme="@style/MainActivityTheme"
             android:exported="false"
-            android:hardwareAccelerated="false">
+            android:hardwareAccelerated="false"
+            android:label="@string/title_activity_web"
+            android:theme="@style/MainActivityTheme" >
         </activity>
-        <activity android:name=".ui.AboutActivity"
-            android:theme="@style/MainActivityTheme"
-            android:exported="false"></activity>
-        <activity android:name=".ui.CommendActivity"
-            android:theme="@style/MainActivityTheme"
-            android:exported="false"></activity>
+        <activity
+            android:name=".ui.AboutActivity"
+            android:exported="false"
+            android:theme="@style/MainActivityTheme" />
+        <activity
+            android:name=".ui.CommendActivity"
+            android:exported="false"
+            android:theme="@style/MainActivityTheme" />
+        <activity
+            android:name=".ui.ADActivity"
+            android:exported="false"
+            android:theme="@style/MainActivityTheme" />
 
-        <!--广告的activity和service-->
+        <!-- 广告的activity和service
         <activity
             android:name="net.youmi.android.AdBrowser"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+
         <service
             android:name="net.youmi.android.AdService"
             android:exported="false" >
@@ -63,11 +99,28 @@
             android:name="net.youmi.android.ExpService"
             android:exported="false" >
         </service>
-        <receiver
-            android:name="net.youmi.android.AdReceiver" >
+
+        <receiver android:name="net.youmi.android.AdReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
+
                 <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.ADActivity"
+            android:label="@string/title_activity_ad" >
+        </activity>-->
+        <activity android:name="com.baidu.appx.ui.BDInnerBrowser"/>
+        <receiver android:name="com.baidu.appx.app_download.CompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.package_added"/>
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
     </application>

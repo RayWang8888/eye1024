@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
+import com.baidu.mobstat.StatService;
 import com.eye1024.R;
 import com.eye1024.api.NetApi;
 import com.eye1024.api.SettingName;
@@ -29,7 +30,6 @@ import com.raywang.rayutils.UIHlep;
 import com.raywang.rayutils.Util;
 import com.rey.material.widget.TabPageIndicator;
 
-import net.youmi.android.offers.OffersManager;
 
 import java.util.ArrayList;
 
@@ -275,7 +275,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        OffersManager.getInstance(this).onAppExit();
         adapter = null;
         pager = null;
         menuFragment = null;
@@ -304,4 +303,15 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        StatService.onResume(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        StatService.onPause(this);
+        super.onPause();
+    }
 }

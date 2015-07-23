@@ -1,0 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eye1024.ui.ADActivity"
+    android:orientation="vertical"
+    android:background="@color/main_color">
+
+    <include layout="@layout/item_head" />
+
+    <RelativeLayout style="@style/match_parent"
+        android:id="@+id/ad"
+        android:background="?content_bg"></RelativeLayout>
+</LinearLayout>

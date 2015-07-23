@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.eye1024.R;
 import com.eye1024.api.ApiURL;
 import com.eye1024.api.SettingName;
@@ -129,5 +130,17 @@ public class WebActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         click(R.id.back);
+    }
+
+    @Override
+    protected void onResume() {
+        StatService.onResume(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        StatService.onPause(this);
+        super.onPause();
     }
 }

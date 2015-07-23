@@ -15,25 +15,24 @@
     <string name="is_show_img">显示图片</string>
     <string name="is_black">夜间模式</string>
     <string name="cache_size">清除图片缓存</string>
-    <string name="ad">更多应用--免费支持开发者</string>
+    <string name="ad">免费支持开发者</string>
+
     <string name="evaluation">去评分</string>
     <string name="commend">评价与建议</string>
     <string name="email_hint">EMail</string>
     <string name="nickname_hint">昵称</string>
     <string name="commend_hint">意见或建议</string>
     <string name="ok">确定</string>
-
     <string name="nomark">你还没有安装任何应用市场哦</string>
     <string name="about">关于</string>
-
     <string name="about_msg">本APP的网站地址1024eye.com\n本应用是专门为程序员提供资讯的APP，由于精力有限，所以目前APP功能还不够完善(后台和APP都一个人呀)\n内容也不够丰富，不过目前正在一点一点的完善，同时本APP开放了源码（开放的源码和APP大体相同，只有获取数据的接口不同，因为服务器流量和速度有限，所以开放源码掉用的接口每天只接受500次请求，其他地方和本APP是相同的,地址:https://git.oschina.net/raywang2014/eye1024.git或者直接在git.oschina.net搜索eye1024），另外大家也可以在菜单中打开更多应用--免费支持开发者下载应用支持，毕竟也算是劳动所得嘛！\n如果有其他问题请联系admin@1024eye.com\n</string>
     <string name="exit">退出</string>
     <string name="back">返回</string>
-
     <string name="about_title">关于程序员之眼</string>
-
     <string name="copyright">Copyright © 1024eye.com All rights reserved</string>
     <string name="exit_alert">再次按back退出</string>
     <string name="email_error">邮箱地址错误，请重新输入</string>
     <string name="commend_error">必须输入意见或建议，谢谢</string>
+    <string name="title_activity_ad">ADActivity</string>
+
 </resources>

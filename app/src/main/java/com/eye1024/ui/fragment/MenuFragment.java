@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.eye1024.R;
 import com.eye1024.api.SettingName;
+import com.eye1024.ui.ADActivity;
 import com.eye1024.ui.AboutActivity;
 import com.eye1024.ui.CommendActivity;
 import com.eye1024.ui.MainActivity;
@@ -22,8 +23,8 @@ import com.raywang.rayutils.Util;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.Switch;
 
-import net.youmi.android.AdManager;
-import net.youmi.android.offers.OffersManager;
+//import net.youmi.android.AdManager;
+//import net.youmi.android.offers.OffersManager;
 
 import java.io.File;
 
@@ -76,9 +77,9 @@ public class MenuFragment extends BaseFragment {
         view.findViewById(R.id.ad).setOnClickListener(this);
         view.findViewById(R.id.evaluation).setOnClickListener(this);
         view.findViewById(R.id.commend).setOnClickListener(this);
-        AdManager.getInstance(getActivity()).init("9d06deb924971b87", "3ae12aefb372e962");
+//        AdManager.getInstance(getActivity()).init("9d06deb924971b87", "3ae12aefb372e962");
 
-        OffersManager.getInstance(getActivity()).onAppLaunch();
+//        OffersManager.getInstance(getActivity()).onAppLaunch();
         showImg = (Switch) view.findViewById(R.id.showImg);
         showImg.setChecked(util.getBoolean(SettingName.ISSHOWIMG, true));
         showImg.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
@@ -131,7 +132,9 @@ public class MenuFragment extends BaseFragment {
                 break;
             case R.id.ad:
                 ///86400000
-                OffersManager.getInstance(getActivity()).showOffersWall(null);
+//                OffersManager.getInstance(getActivity()).showOffersWall(null);
+                Intent ad = new Intent(getActivity(), ADActivity.class);
+                startActivity(ad);
                 break;
             case R.id.evaluation:
 
