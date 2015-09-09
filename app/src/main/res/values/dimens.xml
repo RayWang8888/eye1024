@@ -29,4 +29,12 @@
 
     <!--顶部栏的文字大小-->
     <dimen name="head_text_size">22sp</dimen>
+
+    <dimen name="arc_progress">100dip</dimen>
+    <dimen name="arc_progress_margin">40dip</dimen>
+
+    <dimen name="noti_btn_min_height">30dip</dimen>
+    <dimen name="noti_bar_min_height">10dip</dimen>
+
+    <dimen name="noti_min_height">70dip</dimen>
 </resources>

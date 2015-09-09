@@ -21,9 +21,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data
-            android:name="BaiduMobAd_CHANNEL"
-            android:value="Baidu Market" />
+
         <!-- 您从百度网站获取的 APP KEY -->
         <meta-data
             android:name="BaiduMobAd_STAT_ID"
@@ -79,50 +77,9 @@
             android:name=".ui.CommendActivity"
             android:exported="false"
             android:theme="@style/MainActivityTheme" />
-        <activity
-            android:name=".ui.ADActivity"
-            android:exported="false"
-            android:theme="@style/MainActivityTheme" />
 
-        <!-- 广告的activity和service
-        <activity
-            android:name="net.youmi.android.AdBrowser"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
+        <service android:name=".services.DownService"></service>
 
-        <service
-            android:name="net.youmi.android.AdService"
-            android:exported="false" >
-        </service>
-        <service
-            android:name="net.youmi.android.ExpService"
-            android:exported="false" >
-        </service>
-
-        <receiver android:name="net.youmi.android.AdReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name=".ui.ADActivity"
-            android:label="@string/title_activity_ad" >
-        </activity>-->
-        <activity android:name="com.baidu.appx.ui.BDInnerBrowser"/>
-        <receiver android:name="com.baidu.appx.app_download.CompleteReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.package_added"/>
-                <data android:scheme="package"/>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

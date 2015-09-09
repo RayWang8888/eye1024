@@ -2,14 +2,7 @@ package com.eye1024.api;
 
 import android.content.Context;
 
-import com.eye1024.bean.ArticleResult;
-import com.eye1024.bean.TypeResult;
-import com.eye1024.bean.WebResult;
-import com.eye1024.db.ArticleDao;
-import com.eye1024.db.TypeDao;
-import com.raywang.rayutils.HttpUtil;
-import com.raywang.rayutils.SharedPreferencesUtil;
-import com.raywang.rayutils.Util;
+import com.raywang.rayutils.HttpCoreThread;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,89 +15,68 @@ import java.util.HashMap;
 public class NetApi {
 
 
-    /** 过期时间，24小时*/
+    private HashMap<String,Object> params = new HashMap<String,Object>();
+    private ArrayList<String> removeKeys;
+    /** 分类过期时间，24小时*/
     private static final long TYPEOVERDUETIME = 86400000;
+    /** 文章过期时间，2小时*/
+    private static final long ARTICLEOVERDUETIME = 7200000;
+
+
+
 
     /**
-     * 获取分类数据，并缓存到本地，需要更新本地的缓存时间
-     * @param context
-     * @return 返回错误信息
-     */
-    public static String getType(Context context){
-        SharedPreferencesUtil util = SharedPreferencesUtil.newInstance(context);
-        //判断是否需要从服务器获取数据
-        if(util.getLong(SettingName.TYPETIME) + TYPEOVERDUETIME > System.currentTimeMillis() ){
-            //小于过期时间，就不获取
-            return null;
-        }
-        TypeResult result = TypeResult.parse(HttpUtil.get(ApiURL.HOST+ApiURL.TYPE,null));
-        if(result != null && result.getData() != null && result.getData().size() > 0){
-            //缓存数据
-            new TypeDao(context).insert(result.getData());
-            //更新缓存时间
-            util.setLong(SettingName.TYPETIME,System.currentTimeMillis());
-            return null;
-        }
-        if(result == null){
-            return "连接服务器失败";
-        }
-        return result.getErrmsg();
+      * 获取文章的列表
+      * @param isRef 是否刷新数据
+     *  @param context 程序上下文
+     *  @param listener 回调监听
+     *  @param params 请求的参数
+     *  @param removeKeys 需要移除的关键字
+     *
+      * @return
+      */
+    public static HttpCoreThread getArticleList(boolean isRef,Context context,
+                                                HttpCoreThread.HttpListener listener,
+                                                HashMap<String,Object> params,
+                                                ArrayList<String> removeKeys){
+
+
+        return new HttpCoreThread(context, ApiURL.HOST+ ApiURL.GETARTICLELIST,listener,params,removeKeys,
+                "page",ARTICLEOVERDUETIME).get(0,isRef);
     }
 
     /**
-     * 获取文章的列表
-     * @param context
-     * @param typeid 分类的id
-     * @param page 当前页面索引
-     * @param rows 每页显示的数据量
-     * @param isRef 是否刷新数据
-     * @return
+     * 获取文章分类
      */
-    public static ArticleResult getArticleList(Context context,int typeid,
-                                                                  int page,int rows,boolean isRef){
-        String url = ApiURL.HOST+ApiURL.GETARTICLELIST+"?type="+typeid+"&rows="+rows;
-        ArticleDao dao = new ArticleDao(context);
-        ArticleResult result = null;
-        String data = dao.findByUrl(url,page);
-        if(data == null || isRef){
-            data = HttpUtil.get(url+"&page="+page,null);
-            if(data != null){
-                result = ArticleResult.parse(data);
-                if(Util.noNull(result.getErrcode())){
-                    //有错误
-                    return result;
-                }else{
-                    //缓存数据
-                    dao.insert(data,url,page);
-                }
-            }
-        }else{
+    public static HttpCoreThread getType(HttpCoreThread.HttpListener listener,Context context){
 
-            result = ArticleResult.parse(data);
-        }
-
-
-        return result;
+        return new HttpCoreThread(context, ApiURL.HOST + ApiURL.TYPE,listener,null,null,null,
+                TYPEOVERDUETIME).get(0,false);
     }
 
     /**
-     * 意见与建议的提交方法
-     * @param email
-     * @param nickname
-     * @param commend
+     * 意见与建议
+     * @param context
+     * @param listener
+     * @param params
      * @return
      */
-    public static WebResult commend(String email,String nickname,String commend){
-        String url = ApiURL.HOST+ApiURL.COMMEND;
-        HashMap<String,Object> data = new HashMap<String,Object>();
-        data.put("email",email);
-        data.put("nickname",nickname);
-        data.put("commend",commend);
-        String res = HttpUtil.post(url,data);
-        if(Util.noNull(res)){
-            WebResult result = WebResult.parse(res);
-            return result;
-        }
-        return null;
+    public static HttpCoreThread commend(Context context, HttpCoreThread.HttpListener listener,
+                        HashMap<String,Object> params){
+        String url = ApiURL.HOST+ ApiURL.COMMEND;
+        return new HttpCoreThread(context,url,listener,params,null,null).post();
+
+    }
+
+    /**
+     * 检测新版本
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static HttpCoreThread checkVersion(Context context,HttpCoreThread.HttpListener listener,
+                                              int requestCode){
+        return new HttpCoreThread(context, ApiURL.HOST+ ApiURL.CHECKVERSION,listener,
+                null,null,null,ARTICLEOVERDUETIME).get(requestCode,false);
     }
 }

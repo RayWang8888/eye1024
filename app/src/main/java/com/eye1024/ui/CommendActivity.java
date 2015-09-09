@@ -1,7 +1,6 @@
 package com.eye1024.ui;
 
 import android.app.AlertDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.TextView;
@@ -11,10 +10,13 @@ import com.eye1024.R;
 import com.eye1024.api.NetApi;
 import com.eye1024.bean.WebResult;
 import com.raywang.activity.BaseActivity;
+import com.raywang.rayutils.HttpCoreThread;
 import com.raywang.rayutils.UIHlep;
 import com.raywang.rayutils.Util;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ProgressView;
+
+import java.util.HashMap;
 
 /**
  * 意见与建议的activity
@@ -25,7 +27,35 @@ public class CommendActivity extends BaseActivity {
     private EditText email;
     private EditText nickname;
     private EditText commend;
-    private CommendAsync async;
+    private HttpCoreThread httpCoreThread;
+    private HashMap<String,Object> params;
+    private HttpCoreThread.HttpListener httpListener = new HttpCoreThread.HttpListener() {
+        @Override
+        public void onCacheData(int requestCode,String data) {
+
+        }
+
+        @Override
+        public void onError(int requestCode,int code, String e) {
+            UIHlep.toast(CommendActivity.this, e);
+        }
+
+        @Override
+        public void onInternet(int requestCode,String data) {
+            closeLoading();
+            if(data != null) {
+                WebResult s = WebResult.parse(data);
+                if (s == null) {
+                    UIHlep.toast(CommendActivity.this, R.string.connet_error);
+                } else if (Util.noNull(s.getErrcode())) {
+                    UIHlep.toast(CommendActivity.this, s.getErrmsg());
+                } else {
+                    UIHlep.toast(CommendActivity.this, R.string.commend_success);
+                    finish();
+                }
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_commend,true);
@@ -68,11 +98,21 @@ public class CommendActivity extends BaseActivity {
                     return;
                 }
                 showLoading();
-                if(async != null){
-                    async.cancel(true);
+//                if(async != null){
+//                    async.cancel(true);
+//                }
+//                async = new CommendAsync();
+//                async.execute(sEmail,sNickname,sCommend);
+                if(httpCoreThread != null){
+                    httpCoreThread.setStop();
                 }
-                async = new CommendAsync();
-                async.execute(sEmail,sNickname,sCommend);
+                if(params == null){
+                    params = new HashMap<String,Object>();
+                }
+                params.put("email",sEmail);
+                params.put("nickname",sNickname);
+                params.put("commend",sCommend);
+                httpCoreThread = NetApi.commend(this, httpListener, params);
                 break;
             default:
                 super.click(id);
@@ -101,36 +141,39 @@ public class CommendActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        if(async != null){
-            async.cancel(true);
-            async = null;
+//        if(async != null){
+//            async.cancel(true);
+//            async = null;
+//        }
+        if(httpCoreThread != null){
+            httpCoreThread.setStop();
         }
         super.onDestroy();
     }
 
-    /**
-     * 意见与建议的异步任务
-     */
-    private class CommendAsync extends AsyncTask<String,Void,WebResult>{
-
-        @Override
-        protected WebResult doInBackground(String... params) {
-            return NetApi.commend(params[0], params[1], params[2]);
-        }
-
-        @Override
-        protected void onPostExecute(WebResult s) {
-            closeLoading();
-            if(s == null){
-                UIHlep.toast(CommendActivity.this, R.string.connet_error);
-            }else if(Util.noNull(s.getErrcode())){
-                UIHlep.toast(CommendActivity.this, s.getErrmsg());
-            }else{
-                UIHlep.toast(CommendActivity.this, R.string.commend_success);
-                finish();
-            }
-        }
-    }
+//    /**
+//     * 意见与建议的异步任务
+//     */
+//    private class CommendAsync extends AsyncTask<String,Void,WebResult>{
+//
+//        @Override
+//        protected WebResult doInBackground(String... params) {
+//            return NetApi.commend(params[0],params[1],params[2]);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(WebResult s) {
+//            closeLoading();
+//            if(s == null){
+//                UIHlep.toast(CommendActivity.this,R.string.connet_error);
+//            }else if(Util.noNull(s.getErrcode())){
+//                UIHlep.toast(CommendActivity.this,s.getErrmsg());
+//            }else{
+//                UIHlep.toast(CommendActivity.this,R.string.commend_success);
+//                finish();
+//            }
+//        }
+//    }
 
     @Override
     protected void onResume() {

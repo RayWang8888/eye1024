@@ -27,6 +27,7 @@
         <item name="menu_text_color">@color/main_text_color</item>
     </style>
 
+    <!-- 夜间模式的主题-->
     <style name="BlackMainActivityTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">false</item>

@@ -3,12 +3,8 @@ package com.eye1024.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,7 +17,6 @@ import com.eye1024.api.SettingName;
 import com.eye1024.bean.ArticleResult;
 import com.raywang.activity.BaseActivity;
 import com.raywang.rayutils.SharedPreferencesUtil;
-import com.raywang.rayutils.Util;
 import com.rey.material.widget.ProgressView;
 
 /**
@@ -32,7 +27,11 @@ import com.rey.material.widget.ProgressView;
 public class WebActivity extends BaseActivity {
 
     private boolean isRead = false;
+    static {
+        System.loadLibrary("Token");
+    }
 
+    public native String getToken(String key);
 
     private WebView web;
 
@@ -72,8 +71,8 @@ public class WebActivity extends BaseActivity {
         if(isBlack){
             web.setBackgroundColor(0);
         }
-        web.loadUrl(ApiURL.HOST+ApiURL.GETARTICLE+"?url="+article.getUrl()
-               +"&isBlack="+isBlack);
+        web.loadUrl(ApiURL.HOST+ ApiURL.GETARTICLE+"?url="+article.getUrl()+"&token="+
+                getToken(article.getUrl())+"&isBlack="+isBlack);
 
         web.setWebViewClient(new WebViewClient());
         //加载完成后才加载图片

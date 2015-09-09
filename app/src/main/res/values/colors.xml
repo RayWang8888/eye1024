@@ -28,4 +28,6 @@
     <!--主题的样式颜色-->
     <color name="black_main_text_color">#ffffff</color>
     <color name="black_read_text_color">#cccccc</color>
+
+    <color name="pro_color">#214193</color>
 </resources>

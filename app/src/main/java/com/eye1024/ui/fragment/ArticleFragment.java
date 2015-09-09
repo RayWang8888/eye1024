@@ -1,10 +1,7 @@
 package com.eye1024.ui.fragment;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,18 +15,20 @@ import com.eye1024.bean.ArticleResult;
 import com.eye1024.db.ReadLogDao;
 import com.eye1024.ui.adapter.ArticleAdapter;
 import com.raywang.fragment.BaseFragment;
+import com.raywang.rayutils.HttpCoreThread;
 import com.raywang.rayutils.UIHlep;
 import com.raywang.rayutils.Util;
 import com.raywang.view.SwipeRefListView;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 菜单的Fragment
  * Created by Ray on 2015/6/29.
  */
-public class ArticleFragment extends BaseFragment{
+public class ArticleFragment extends BaseFragment {
 
     private static final String TAG = ArticleFragment.class.getName();
     /** 当前第几页*/
@@ -44,8 +43,6 @@ public class ArticleFragment extends BaseFragment{
     private ProgressView progress;
     /** 最大页数*/
     private int maxPage = 1;
-    /** 获取文章的异步任务*/
-    private GetArticleAsync async;
     /** 显示网络错误的消息的textView*/
     private TextView msg;
 
@@ -55,8 +52,39 @@ public class ArticleFragment extends BaseFragment{
 
     private ReadLogDao logDao;
 
-    /** 是否是第一次获取数据*/
-    private boolean isFristGetData = true;
+
+    private HttpCoreThread httpCoreThread;
+    /** 请求的参数*/
+    private HashMap<String,Object> params;
+    private ArrayList<String> removeKeys ;
+
+    private HttpCoreThread.HttpListener httpListener = new HttpCoreThread.HttpListener() {
+        @Override
+        public void onCacheData(int requestCode,String data) {
+            if(Util.noNull(data)){
+                ArticleResult articleResult = ArticleResult.parse(data);
+                onDataResult(articleResult);
+            }else{
+                onDataResult(null);
+            }
+        }
+
+        @Override
+        public void onError(int requestCode,int code, String e) {
+            onDataResult(null);
+        }
+
+        @Override
+        public void onInternet(int requestCode,String data) {
+            if(Util.noNull(data)){
+                ArticleResult articleResult = ArticleResult.parse(data);
+                onDataResult(articleResult);
+            }else{
+                onDataResult(null);
+            }
+        }
+    };
+
 
     public static ArticleFragment newInstance(int typeid){
         ArticleFragment af = new ArticleFragment();
@@ -80,50 +108,28 @@ public class ArticleFragment extends BaseFragment{
      * 获取数据的方法，如果异步任务对象Async不是空，说明已经在获取了
      */
     protected void iniData(){
-        if(async == null){
-            async = new GetArticleAsync(false);
-            async.execute();
-        }
+          getData(false);
+          onIniDataFinsh();
     }
 
     @Override
     public void onDestroy() {
         //停止异步任务
-        if(async != null){
-            async.cancel(true);
-            async = null;
-            page = 1;
+        if(httpCoreThread != null){
+            httpCoreThread.setStop();
         }
         if(adapter != null){
             adapter = null;
         }
-        isFristGetData = true;
         super.onDestroy();
     }
 
-    @Override
-    public void onDestroyView() {
-        //停止异步任务
-        if(async != null){
-            async.cancel(true);
-            async = null;
-            page = 1;
-        }
-        if(adapter != null){
-            adapter = null;
-        }
-        isFristGetData = true;
-        super.onDestroyView();
-    }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_article,container,false);
-
-        iniView(view);
-        return view;
+        return super.onCreateView(inflater,container,savedInstanceState, R.layout.fragment_article);
     }
 
 
@@ -150,13 +156,7 @@ public class ArticleFragment extends BaseFragment{
             }
         });
 
-//        refListView.getListView().getViewTreeObserver().addOnGlobalLayoutListener(
-//                new ViewTreeObserver.OnGlobalLayoutListener() {
-//                    @Override
-//                    public void onGlobalLayout() {
-//                        refListView.getListView().computeScrollY();
-//                    }
-//                });
+
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         loadmore = inflater.inflate(R.layout.item_loadingmore,null);
@@ -168,88 +168,82 @@ public class ArticleFragment extends BaseFragment{
      * 获取数据
      */
     private void getData(boolean isRef){
-        if(async != null){
-            async.cancel(true);
+
+        if(params == null){
+            params = new HashMap<String,Object>();
+            removeKeys = new ArrayList<String>();
+            removeKeys.add("token");
+            removeKeys.add("page");
         }
-        async = new GetArticleAsync(isRef);
-        async.execute();
+
+        params.put("type",typeid);
+        params.put("page",page);
+        params.put("rows",ROWS);
+        httpCoreThread = NetApi.getArticleList(isRef, getActivity(), httpListener, params,
+                removeKeys);
     }
-    /**
-     * 获取文章的异步任务
-     */
-    private class GetArticleAsync extends AsyncTask<Void,Void,ArticleResult>{
-        private boolean isRef = false;
-
-        private GetArticleAsync(boolean isRef) {
-            this.isRef = isRef;
-        }
 
 
-        @Override
-        protected ArticleResult doInBackground(Void... params) {
-            return NetApi.getArticleList(getActivity(),typeid,page,ROWS,isRef);
-        }
-
-        @Override
-        protected void onPostExecute(ArticleResult articleResult) {
-            refListView.setRefreshing(false);
-            refListView.onLoadFinish();
-            if(articleResult == null){
-                //连接服务器失败了
+    private void onDataResult(ArticleResult articleResult){
+        refListView.setRefreshing(false);
+        refListView.onLoadFinish();
+        if(articleResult == null){
+            //连接服务器失败了
+            if(adapter == null || adapter.getCount() == 0) {
                 progress.setVisibility(View.GONE);
                 refListView.setVisibility(View.GONE);
                 msg.setVisibility(View.VISIBLE);
                 msg.setOnClickListener(ArticleFragment.this);
             }else{
-                if(Util.noNull(articleResult.getErrcode())){
-                    //有错误产生
-                    UIHlep.toast(getActivity(),articleResult.getErrmsg());
-                    progress.setVisibility(View.GONE);
-                    refListView.setVisibility(View.GONE);
-                    msg.setVisibility(View.VISIBLE);
-                    if("2".equals(articleResult.getErrcode())){
-                        msg.setText(articleResult.getErrmsg());
-                    }else{
-                        msg.setText(articleResult.getErrmsg()+",点击重试");
-                        msg.setOnClickListener(ArticleFragment.this);
-                    }
+                UIHlep.toast(getActivity(), R.string.connet_error);
+            }
+        }else{
+            if(Util.noNull(articleResult.getErrcode())){
+                //有错误产生
+                UIHlep.toast(getActivity(), articleResult.getErrmsg());
+                progress.setVisibility(View.GONE);
+                refListView.setVisibility(View.GONE);
+                msg.setVisibility(View.VISIBLE);
+                if("2".equals(articleResult.getErrcode())){
+                    msg.setText(articleResult.getErrmsg());
                 }else{
-                    //获取已经查看过的文章
-                    ArrayList<String> urls = new ArrayList<String>();
-                    for(ArticleResult.Article article : articleResult.getData()){
-                        urls.add(article.getUrl());
-                    }
-                    ArrayList<String> logs = logDao.findIsRead(urls);
-
-                    //获取成功，计算最大页数
-                    maxPage = articleResult.getCount() / ROWS;
-                    if(articleResult.getCount() % ROWS != 0){
-                        maxPage ++;
-                    }
-                    progress.setVisibility(View.GONE);
-                    msg.setVisibility(View.GONE);
-                    refListView.setVisibility(View.VISIBLE);
-                    if(adapter == null){
-                        adapter = new ArticleAdapter(getActivity(),articleResult.getData());
-                        adapter.setReadLog(logs);
-                        refListView.setAdapter(adapter);
-                    }else{
-                        if(page == 1){
-                            adapter.setReadLog(logs);
-                            adapter.setData(articleResult.getData());
-                        }else{
-                            adapter.addReadLog(logs);
-                            adapter.addData(articleResult.getData());
-                        }
-                    }
-                    //计算高度，用于获取listView的滚动位置
-                    refListView.getListView().computeScrollY();
+                    msg.setText(articleResult.getErrmsg()+",点击重试");
+                    msg.setOnClickListener(ArticleFragment.this);
                 }
+            }else{
+                //获取已经查看过的文章
+                ArrayList<String> urls = new ArrayList<String>();
+                for(ArticleResult.Article article : articleResult.getData()){
+                    urls.add(article.getUrl());
+                }
+                ArrayList<String> logs = logDao.findIsRead(urls);
+
+                //获取成功，计算最大页数
+                maxPage = articleResult.getCount() / ROWS;
+                if(articleResult.getCount() % ROWS != 0){
+                    maxPage ++;
+                }
+                progress.setVisibility(View.GONE);
+                msg.setVisibility(View.GONE);
+                refListView.setVisibility(View.VISIBLE);
+                if(adapter == null){
+                    adapter = new ArticleAdapter(getActivity(),articleResult.getData());
+                    adapter.setReadLog(logs);
+                    refListView.setAdapter(adapter);
+                }else{
+                    if(page == 1){
+                        adapter.setReadLog(logs);
+                        adapter.setData(articleResult.getData());
+                    }else{
+                        adapter.addReadLog(logs);
+                        adapter.addData(articleResult.getData());
+                    }
+                }
+                //计算高度，用于获取listView的滚动位置
+                refListView.getListView().computeScrollY();
             }
         }
     }
-
-
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -267,25 +261,11 @@ public class ArticleFragment extends BaseFragment{
        }
    }
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        if(isVisibleToUser && isFristGetData){
-            isFristGetData = false;
-            iniData();
-        }
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
     @Override
     protected void click(int id) {
         switch (id){
             case R.id.msg:
-                if(async != null){
-                    async.cancel(true);
-                    async = new GetArticleAsync(false);
-                    async.execute();
-                }
+                getData(false);
                 progress.setVisibility(View.VISIBLE);
                 msg.setVisibility(View.GONE);
                 break;
@@ -300,4 +280,6 @@ public class ArticleFragment extends BaseFragment{
             adapter.setShowImg(isShowImg);
         }
     }
+
+
 }

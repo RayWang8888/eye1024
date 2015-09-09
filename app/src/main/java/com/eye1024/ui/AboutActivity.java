@@ -1,9 +1,9 @@
 package com.eye1024.ui;
 
 import android.os.Bundle;
-import android.view.Window;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.eye1024.BuildConfig;
 import com.eye1024.R;
 import com.eye1024.api.SettingName;
@@ -14,7 +14,7 @@ import com.raywang.rayutils.SharedPreferencesUtil;
  * 关于的Activity
  * Created by Ray on 2015/7/6.
  */
-public class AboutActivity extends BaseActivity{
+public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,5 +49,17 @@ public class AboutActivity extends BaseActivity{
                 super.click(id);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        StatService.onResume(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        StatService.onPause(this);
+        super.onPause();
     }
 }

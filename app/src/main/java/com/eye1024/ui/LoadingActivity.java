@@ -1,9 +1,9 @@
 package com.eye1024.ui;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -34,9 +34,9 @@ public class LoadingActivity extends BaseActivity {
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState,R.layout.activity_loading,true);
+        super.onCreate(savedInstanceState, R.layout.activity_loading,true);
         View view = findViewById(R.id.img);
-        Animation animation = AnimationUtils.loadAnimation(this,R.anim.ini_anim);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.ini_anim);
         view.startAnimation(animation);
         handler.sendEmptyMessageDelayed(2,200);
 

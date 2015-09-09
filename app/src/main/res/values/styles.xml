@@ -23,6 +23,7 @@
         <item name="menu_text_color">@color/main_text_color</item>
     </style>
 
+
     <style name="BlackMainActivityTheme" parent="@android:style/Theme.Holo.Light">
         <item name="colorPrimary">@color/main_color</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -145,5 +146,11 @@
     <style name="FlatWaveColorButtonRippleStyle.Button" >
         <item name="android:gravity">center</item>
         <item name="android:background">#aaaaaa</item>
+    </style>
+
+
+    <style name="SimpleDialogLight" parent="Material.App.Dialog.Simple.Light">
+        <item name="di_inAnimation">@anim/anim_scale_in</item>
+        <item name="di_outAnimation">@anim/anim_scale_out</item>
     </style>
 </resources>

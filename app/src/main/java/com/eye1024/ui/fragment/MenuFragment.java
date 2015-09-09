@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.eye1024.R;
 import com.eye1024.api.SettingName;
-import com.eye1024.ui.ADActivity;
 import com.eye1024.ui.AboutActivity;
 import com.eye1024.ui.CommendActivity;
 import com.eye1024.ui.MainActivity;
@@ -19,20 +18,18 @@ import com.eye1024.util.ImageLoadIni;
 import com.nostra13.universalimageloader.cache.disc.DiskCache;
 import com.raywang.fragment.BaseFragment;
 import com.raywang.rayutils.SharedPreferencesUtil;
-import com.raywang.rayutils.Util;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.Switch;
 
-//import net.youmi.android.AdManager;
-//import net.youmi.android.offers.OffersManager;
-
 import java.io.File;
+
 
 /**
  * 菜单的Fragment
  * Created by Administrator on 2015/6/26.
  */
 public class MenuFragment extends BaseFragment {
+
 
     private Button clean;
     private DiskCache diskCache = null;
@@ -49,7 +46,6 @@ public class MenuFragment extends BaseFragment {
      * 菜单被点击的监听
      */
     private OnMenuClick menuClick;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,12 +70,9 @@ public class MenuFragment extends BaseFragment {
         view.findViewById(R.id.about).setOnClickListener(this);
 
         view.findViewById(R.id.exit).setOnClickListener(this);
-        view.findViewById(R.id.ad).setOnClickListener(this);
         view.findViewById(R.id.evaluation).setOnClickListener(this);
         view.findViewById(R.id.commend).setOnClickListener(this);
-//        AdManager.getInstance(getActivity()).init("9d06deb924971b87", "3ae12aefb372e962");
 
-//        OffersManager.getInstance(getActivity()).onAppLaunch();
         showImg = (Switch) view.findViewById(R.id.showImg);
         showImg.setChecked(util.getBoolean(SettingName.ISSHOWIMG, true));
         showImg.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
@@ -130,12 +123,7 @@ public class MenuFragment extends BaseFragment {
             case R.id.exit:
                 getActivity().finish();
                 break;
-            case R.id.ad:
-                ///86400000
-//                OffersManager.getInstance(getActivity()).showOffersWall(null);
-                Intent ad = new Intent(getActivity(), ADActivity.class);
-                startActivity(ad);
-                break;
+
             case R.id.evaluation:
 
                 Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
@@ -155,6 +143,10 @@ public class MenuFragment extends BaseFragment {
         if (menuClick != null) {
             menuClick.onClick();
         }
+    }
+
+    protected void iniData() {
+
     }
 
     /**

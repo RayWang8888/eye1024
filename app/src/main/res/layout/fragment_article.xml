@@ -31,6 +31,7 @@
     <TextView style="@style/match_parent"
         android:gravity="center"
         android:id="@+id/msg"
+        android:textColor="?main_text_color"
         android:text="@string/net_error_msg"
         android:visibility="gone"/>
 </FrameLayout>

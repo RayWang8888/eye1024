@@ -5,12 +5,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 
 import com.baidu.mobstat.StatService;
@@ -18,20 +19,26 @@ import com.eye1024.R;
 import com.eye1024.api.NetApi;
 import com.eye1024.api.SettingName;
 import com.eye1024.bean.TypeResult;
+import com.eye1024.bean.VersionResult;
 import com.eye1024.db.ReadLogDao;
 import com.eye1024.db.TypeDao;
+import com.eye1024.services.DownService;
 import com.eye1024.ui.fragment.ArticleFragment;
 import com.eye1024.ui.fragment.MenuFragment;
+import com.eye1024.util.DialogHelp;
+import com.eye1024.view.Dialog;
 import com.eye1024.view.drawerlib.ActionBarDrawerToggle;
 import com.eye1024.view.drawerlib.DrawerArrowDrawable;
 import com.raywang.activity.BaseActivity;
+import com.raywang.rayutils.HttpCoreThread;
 import com.raywang.rayutils.SharedPreferencesUtil;
+import com.raywang.rayutils.ThreadDown;
 import com.raywang.rayutils.UIHlep;
-import com.raywang.rayutils.Util;
 import com.rey.material.widget.TabPageIndicator;
 
-
 import java.util.ArrayList;
+
+//import net.youmi.android.offers.OffersManager;
 
 /**
  * 主界面activity
@@ -65,11 +72,46 @@ public class MainActivity extends BaseActivity {
 
     private ArticleFragment[] fragments;
 
-    private GetTypeAsync async;
+    /** 获取分类的线程对象*/
+    private HttpCoreThread httpCoreThread;
 
     private long lastTime = 0;
     private SharedPreferencesUtil util;
+    /** 版本更新检测的请求码*/
+    private final static int CHECKREQUESTCODE = 1;
+    /** 版本检测的线程对象*/
+    private HttpCoreThread checkThread;
+    /** 新版本提示的Dialog*/
+    private Dialog dialog;
+    private HttpCoreThread.HttpListener httpListener = new HttpCoreThread.HttpListener() {
+        @Override
+        public void onCacheData(int requestCode,String data) {
+            switch (requestCode){
+                case CHECKREQUESTCODE:
+                    //新版本返回数据了
+//                    onCheckResult(data);
+                    break;
+            }
+        }
 
+        @Override
+        public void onError(int requestCode,int code, String e) {
+
+        }
+
+        @Override
+        public void onInternet(int requestCode,String data) {
+            switch (requestCode){
+                case 0:
+                    onPostExecute(data);
+                    break;
+                case CHECKREQUESTCODE:
+                    //新版本返回数据了
+                    onCheckResult(data);
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         util = SharedPreferencesUtil.newInstance(this);
@@ -152,12 +194,8 @@ public class MainActivity extends BaseActivity {
         typeDao = new TypeDao(this);
         types = typeDao.findAll();
         fragments = new ArticleFragment[types.size()];
-
-        if(util.getLong(SettingName.TYPETIME) < System.currentTimeMillis() - TypeDao.OVERDUETIME){
-            //分类数据超过1天了，需要重新获取
-            async = new GetTypeAsync();
-            async.execute();
-        }
+        httpCoreThread = NetApi.getType(httpListener, this);
+        checkThread = NetApi.checkVersion(this, httpListener, CHECKREQUESTCODE);
     }
 
     /**
@@ -255,34 +293,72 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 获取分类的异步任务，获取完成之后，下次启动才起作用
-     */
-    private class GetTypeAsync extends AsyncTask<Void,Void,String>{
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return NetApi.getType(MainActivity.this);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if(Util.noNull(s)){
-                UIHlep.toast(MainActivity.this,s);
+    protected void onPostExecute(String s) {
+        if(s != null) {
+            TypeResult result = TypeResult.parse(s);
+            if (result != null && result.getData() != null && result.getData().size() > 0) {
+                //缓存数据
+                new TypeDao(this).insert(result.getData());
             }
         }
     }
+
+
 
     @Override
     protected void onDestroy() {
         adapter = null;
         pager = null;
         menuFragment = null;
-        if(async != null){
-            async.cancel(true);
+        if(httpCoreThread != null){
+            httpCoreThread.setStop();
+        }
+        if(checkThread != null){
+            checkThread.setStop();
         }
         super.onDestroy();
     }
+
+    /**
+     * 检测版本的结果返回了
+     * @param data
+     */
+    private void onCheckResult(String data){
+        if(data != null) {
+            Log.i("info",data);
+            final VersionResult result = VersionResult.parse(data);
+            try {
+                PackageInfo info = getPackageManager().getPackageInfo(this.getPackageName(), 0);
+                if(result.getData() != null && result.getData().getVersion() > info.versionCode){
+                    //有新版本了
+                    dialog = DialogHelp.showOkAndCancel("有新版"+result.getData().getVersionname()+"是否更新",
+                           "大小："+result.getData().getSize()+"\n"+
+                                   result.getData().getDes(),"更新","取消",this,new View.OnClickListener(){
+                                @Override
+                                public void onClick(View v) {
+                                    int id = v.getId();
+                                    if(id == Dialog.ACTION_POSITIVE){
+                                        //更新
+                                        Intent intent = new Intent(MainActivity.this, DownService.class);
+                                        intent.putExtra("type",DownService.DOWN);
+                                        intent.putExtra("url",result.getData().getUrl());
+                                        startService(intent);
+                                        dialog.dismiss();
+                                    }else{
+                                        dialog.dismiss();
+                                    }
+
+                                }
+                            });
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -295,14 +371,11 @@ public class MainActivity extends BaseActivity {
         long time = System.currentTimeMillis();
         if(time - 2000 > lastTime){
             lastTime = time;
-            UIHlep.toast(this,R.string.exit_alert);
-//            Snackbar.make(pager,R.string.exit_alert,Snackbar.LENGTH_SHORT).show();
+            UIHlep.toast(this, R.string.exit_alert);
             return;
         }
         super.onBackPressed();
     }
-
-
     @Override
     protected void onResume() {
         StatService.onResume(this);
@@ -314,4 +387,7 @@ public class MainActivity extends BaseActivity {
         StatService.onPause(this);
         super.onPause();
     }
+
+
+
 }

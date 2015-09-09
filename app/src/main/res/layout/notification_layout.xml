@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:minHeight="@dimen/noti_min_height"
+    android:background="@color/white"
+    android:padding="@dimen/main_padding"
+    android:orientation="vertical">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/noti_bar_min_height"
+        android:id="@+id/progressBar"
+        android:progressDrawable="@drawable/progressbar_color"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/info"
+        android:layout_gravity="center"/>
+
+    <LinearLayout style="@style/match_width"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/main_margin">
+        <Button style="@style/nowidth_wrapheight"
+            android:layout_weight="1"
+            android:id="@+id/cancel"
+            android:minHeight="@dimen/noti_btn_min_height"
+            android:text="@string/cancel"
+            android:background="@drawable/noti_btn_bg"
+            android:textColor="#43CD80"/>
+        <Button style="@style/nowidth_wrapheight"
+            android:layout_weight="1"
+            android:id="@+id/pause"
+            android:minHeight="@dimen/noti_btn_min_height"
+            android:text="@string/pause"
+            android:background="@drawable/noti_btn_bg"
+            android:textColor="#43CD80"/>
+    </LinearLayout>
+</LinearLayout>

@@ -16,4 +16,6 @@ public class ApiURL {
     public static final String GETARTICLE = "/getalert.do";
     /** 意见与建议*/
     public static final String COMMEND = "/commend.do";
+    /** 检测新版本的方法*/
+    public static final String CHECKVERSION = "/checkVersion.do";
 }
