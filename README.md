@@ -10,3 +10,5 @@
 ![主界面](http://git.oschina.net/uploads/images/2015/0909/171506_9517591a_108170.png "主界面")<br/>
 菜单界面<br/>
 ![菜单界面](http://git.oschina.net/uploads/images/2015/0909/171653_644a2450_108170.png "菜单界面")<br/>
+文章阅读<br/>
+![文章阅读](http://git.oschina.net/uploads/images/2015/0909/173045_6892efe6_108170.png "文章阅读")
