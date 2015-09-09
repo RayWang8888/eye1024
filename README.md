@@ -7,9 +7,10 @@
 4.意见与建议<br/>
 5.自动更新（多线程断点更新）<br/>
 **部分点击效果模仿Android 5.0的点击特效，（目前吧视频转为git图片都很大，找到好办法后上传git）**<br/>
-主界面<br/>
+**主界面**<br/>
 ![主界面](http://git.oschina.net/uploads/images/2015/0909/171506_9517591a_108170.png "主界面")<br/>
-菜单界面<br/>
+**菜单界面**<br/>
 ![菜单界面](http://git.oschina.net/uploads/images/2015/0909/171653_644a2450_108170.png "菜单界面")<br/>
-文章阅读<br/>
+**文章阅读**<br/>
 ![文章阅读](http://git.oschina.net/uploads/images/2015/0909/173045_6892efe6_108170.png "文章阅读")
+**自动更新时Notification**<br/>![自动更新时Notification](http://git.oschina.net/uploads/images/2015/0909/174210_cb8e3ff0_108170.png "自动更新时Notification")
