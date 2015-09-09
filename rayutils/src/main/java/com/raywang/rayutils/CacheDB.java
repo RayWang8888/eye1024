@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -154,7 +153,6 @@ public class CacheDB extends SQLiteOpenHelper {
     }
 
     public synchronized void update(String url,int threadId,long where){
-        Log.i("info","update   where:"+where);
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("update downLog set whereleng=? where url=? and thread=?",
                 new Object[]{where,url,threadId});

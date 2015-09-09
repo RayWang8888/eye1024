@@ -27,11 +27,7 @@ import com.rey.material.widget.ProgressView;
 public class WebActivity extends BaseActivity {
 
     private boolean isRead = false;
-    static {
-        System.loadLibrary("Token");
-    }
 
-    public native String getToken(String key);
 
     private WebView web;
 
@@ -71,8 +67,7 @@ public class WebActivity extends BaseActivity {
         if(isBlack){
             web.setBackgroundColor(0);
         }
-        web.loadUrl(ApiURL.HOST+ ApiURL.GETARTICLE+"?url="+article.getUrl()+"&token="+
-                getToken(article.getUrl())+"&isBlack="+isBlack);
+        web.loadUrl(ApiURL.HOST+ ApiURL.GETARTICLE+"?url="+article.getUrl()+"&isBlack="+isBlack);
 
         web.setWebViewClient(new WebViewClient());
         //加载完成后才加载图片
