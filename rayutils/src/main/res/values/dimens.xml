@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--主要的提示文字大小-->
+    <dimen name="main_state">12sp</dimen>
+    <dimen name="main_padding">8dip</dimen>
+</resources>

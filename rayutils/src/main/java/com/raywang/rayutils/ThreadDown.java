@@ -1,9 +1,5 @@
 package com.raywang.rayutils;
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +7,11 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ConcurrentHashMap;
+
+
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
 /**
  * 多线程下载文件的工具类

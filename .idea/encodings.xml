@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/AboutActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/CommendActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/LoadingActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/MainActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/WebActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/adapter/RecyclerArticleAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/fragment/ArticleFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/eye1024/ui/fragment/MenuFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/values" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/activity/BaseActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/fragment/BaseFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/interfaces/ImageLoaderAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/rayutils/CacheDB.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/rayutils/HttpCoreThread.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/rayutils/HttpUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/rayutils/SharedPreferencesUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/rayutils/ThreadDown.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/rayutils/UIHlep.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/rayutils/Util.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/DividerItemDecoration.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/EnhanceOnClickListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/HorizontalLine.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/ProportionImageView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/SwipeBackActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/SwipeBackLayout.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/SwipeRefListView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/java/raywang/view/SwipeRefRecyclerView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/res/layout" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/res/values/attrs.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/res/values/colors.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/res/values/dimens.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/res/values/strings.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rayutils/src/main/res/values/style.xml" charset="UTF-8" />
+  </component>
 </project>
-

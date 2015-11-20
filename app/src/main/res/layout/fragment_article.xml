@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="?content_bg">
 
-    <!---->
+    <!--
     <com.raywang.view.SwipeRefListView
         app:rDivider="@color/divider"
         app:rDividerHeight="1px"
@@ -16,17 +16,24 @@
         android:listSelector="@android:color/transparent"
         android:choiceMode="singleChoice"
         android:id="@+id/articles"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
+
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progress"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_gravity="center"
-        app:pv_autostart = "false"
+        app:pv_autostart = "true"
         app:pv_circular="true"
         app:pv_progressStyle="@style/CircularProgressDrawableStyle"
         app:pv_progressMode="indeterminate"/>
+
+    <com.raywang.view.SwipeRefRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/articles"/>
 
     <TextView style="@style/match_parent"
         android:gravity="center"

@@ -23,6 +23,30 @@
         <item name="menu_text_color">@color/main_text_color</item>
     </style>
 
+    <!--Theme.AppCompat.Light.DarkActionBar-->
+    <style name="Theme.Swipe.Back" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- -->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimary">@color/main_color</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <item name="colorControlActivated">@color/colorControlActivated</item>
+        <item name="colorSwitchThumbNormal">@color/colorSwitchThumbNormal</item>
+        <item name="android:activityOpenExitAnimation">@anim/abc_slide_in_bottom</item>
+        <item name="android:activityCloseEnterAnimation">@anim/abc_slide_out_top</item>
+        <item name="android:activityCloseExitAnimation">@anim/abc_slide_out_top</item>
+
+        <!--主题的样式-->
+        <item name="content_bg">@color/white</item>
+        <item name="main_text_color">@color/main_text_color</item>
+        <item name="read_text_color">@color/state_text_color</item>
+        <item name="menu_text_color">@color/main_text_color</item>
+    </style>
+
 
     <style name="BlackMainActivityTheme" parent="@android:style/Theme.Holo.Light">
         <item name="colorPrimary">@color/main_color</item>

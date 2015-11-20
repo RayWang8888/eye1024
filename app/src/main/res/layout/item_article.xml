@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:minHeight="@dimen/min_item_height"
     android:padding="@dimen/main_padding"
+    android:id="@+id/layout"
     android:orientation="horizontal">
 
     <RelativeLayout

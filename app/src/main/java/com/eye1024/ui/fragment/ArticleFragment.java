@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,13 @@ import com.eye1024.R;
 import com.eye1024.api.NetApi;
 import com.eye1024.bean.ArticleResult;
 import com.eye1024.db.ReadLogDao;
-import com.eye1024.ui.adapter.ArticleAdapter;
+import com.eye1024.ui.adapter.RecyclerArticleAdapter;
 import com.raywang.fragment.BaseFragment;
 import com.raywang.rayutils.HttpCoreThread;
 import com.raywang.rayutils.UIHlep;
 import com.raywang.rayutils.Util;
-import com.raywang.view.SwipeRefListView;
+import com.raywang.view.DividerItemDecoration;
+import com.raywang.view.SwipeRefRecyclerView;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ public class ArticleFragment extends BaseFragment {
     /** 每次获取的数量*/
     private static final int ROWS = 20;
     /** 下拉刷新，上拉加载更多的控件*/
-    private SwipeRefListView refListView;
+    private SwipeRefRecyclerView refRecyclerView;
     /** 没有缓存时请求网络数据的进度圈控件*/
     private ProgressView progress;
     /** 最大页数*/
@@ -46,7 +49,7 @@ public class ArticleFragment extends BaseFragment {
     /** 显示网络错误的消息的textView*/
     private TextView msg;
 
-    private ArticleAdapter adapter;
+    private RecyclerArticleAdapter adapter;
 
     private View loadmore;
 
@@ -62,6 +65,8 @@ public class ArticleFragment extends BaseFragment {
         @Override
         public void onCacheData(int requestCode,String data) {
             if(Util.noNull(data)){
+
+
                 ArticleResult articleResult = ArticleResult.parse(data);
                 onDataResult(articleResult);
             }else{
@@ -135,33 +140,36 @@ public class ArticleFragment extends BaseFragment {
 
     protected void iniView(View view){
         super.iniView(view);
-        refListView = (SwipeRefListView) view.findViewById(R.id.articles);
+        refRecyclerView = (SwipeRefRecyclerView) view.findViewById(R.id.articles);
         progress = (ProgressView) view.findViewById(R.id.progress);
         progress.start();
         msg = (TextView) view.findViewById(R.id.msg);
 
-        refListView.setOnrefListener(new SwipeRefListView.OnRefListener() {
-            @Override
-            public void onLastShow() {
-                if(page < maxPage){
-                    page ++;
-                    getData(false);
-                }
-            }
-
+        refRecyclerView.setOnRefreshListener(new SwipeRefRecyclerView.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 page = 1;
                 getData(true);
             }
+
+            @Override
+            public void onLoadMore() {
+                if (page < maxPage) {
+                    getData(false);
+                }
+            }
         });
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        refRecyclerView.getRecyclerView().setHasFixedSize(true);
+        refRecyclerView.setLayoutManager(llm);
+        refRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        refRecyclerView.getRecyclerView().getItemAnimator().setAddDuration(1000);
+        refRecyclerView.getRecyclerView().addItemDecoration(new DividerItemDecoration(
+                getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
 
 
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        loadmore = inflater.inflate(R.layout.item_loadingmore,null);
-        ((ProgressView)loadmore.findViewById(R.id.progress)).start();
-        refListView.setFooter(loadmore);
     }
 
     /**
@@ -177,7 +185,7 @@ public class ArticleFragment extends BaseFragment {
         }
 
         params.put("type",typeid);
-        params.put("page",page);
+        params.put("page",page+1);
         params.put("rows",ROWS);
         httpCoreThread = NetApi.getArticleList(isRef, getActivity(), httpListener, params,
                 removeKeys);
@@ -185,13 +193,13 @@ public class ArticleFragment extends BaseFragment {
 
 
     private void onDataResult(ArticleResult articleResult){
-        refListView.setRefreshing(false);
-        refListView.onLoadFinish();
+        refRecyclerView.setRefreshing(false);
+        refRecyclerView.loadingFinish();
         if(articleResult == null){
             //连接服务器失败了
-            if(adapter == null || adapter.getCount() == 0) {
+            if(adapter == null || adapter.getItemCount() == 0) {
                 progress.setVisibility(View.GONE);
-                refListView.setVisibility(View.GONE);
+                refRecyclerView.setVisibility(View.GONE);
                 msg.setVisibility(View.VISIBLE);
                 msg.setOnClickListener(ArticleFragment.this);
             }else{
@@ -202,7 +210,7 @@ public class ArticleFragment extends BaseFragment {
                 //有错误产生
                 UIHlep.toast(getActivity(), articleResult.getErrmsg());
                 progress.setVisibility(View.GONE);
-                refListView.setVisibility(View.GONE);
+                refRecyclerView.setVisibility(View.GONE);
                 msg.setVisibility(View.VISIBLE);
                 if("2".equals(articleResult.getErrcode())){
                     msg.setText(articleResult.getErrmsg());
@@ -212,6 +220,8 @@ public class ArticleFragment extends BaseFragment {
                 }
             }else{
                 //获取已经查看过的文章
+
+                page ++;
                 ArrayList<String> urls = new ArrayList<String>();
                 for(ArticleResult.Article article : articleResult.getData()){
                     urls.add(article.getUrl());
@@ -223,13 +233,13 @@ public class ArticleFragment extends BaseFragment {
                 if(articleResult.getCount() % ROWS != 0){
                     maxPage ++;
                 }
-                progress.setVisibility(View.GONE);
                 msg.setVisibility(View.GONE);
-                refListView.setVisibility(View.VISIBLE);
+                refRecyclerView.setVisibility(View.VISIBLE);
+                progress.setVisibility(View.GONE);
                 if(adapter == null){
-                    adapter = new ArticleAdapter(getActivity(),articleResult.getData());
+                    adapter = new RecyclerArticleAdapter(getActivity(),articleResult.getData());
                     adapter.setReadLog(logs);
-                    refListView.setAdapter(adapter);
+                    refRecyclerView.setAdapter(adapter);
                 }else{
                     if(page == 1){
                         adapter.setReadLog(logs);
@@ -240,7 +250,7 @@ public class ArticleFragment extends BaseFragment {
                     }
                 }
                 //计算高度，用于获取listView的滚动位置
-                refListView.getListView().computeScrollY();
+
             }
         }
     }
@@ -255,7 +265,6 @@ public class ArticleFragment extends BaseFragment {
     }
 
    public void addReadLog(String url){
-       logDao.cacheReadLog(url);
        if(adapter != null){
            adapter.addReadUrl(url);
        }

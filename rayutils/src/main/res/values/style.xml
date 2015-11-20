@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 进度圈的样式-->
+    <style name="CircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/main_color</item>
+    </style>
+
+
+</resources>

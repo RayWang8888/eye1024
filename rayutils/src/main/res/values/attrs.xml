@@ -39,6 +39,12 @@
         <attr name="rMargin"/>
     </declare-styleable>
 
+    <declare-styleable name="SwipeRefRecyclerView">
+        <attr name="rDivider"/>
+        <attr name="rDividerHeight"/>
+        <attr name="rMargin"/>
+    </declare-styleable>
+
     <attr name="dashGap" format="dimension" />
     <attr name="dashWidth" format="dimension" />
     <attr name="dashGapWidth" format="dimension"/>
@@ -49,6 +55,13 @@
         <attr name="dashGapWidth"/>
         <attr name="color" />
     </declare-styleable>
+
+    <attr name="borderRadius" format="dimension" />
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+
 
 
 </resources>

@@ -318,7 +318,7 @@ public class HttpCoreThread extends Thread {
         int code = 0;
         try {
             httpUrl = new URL(url);
-            Util.logi(TAG, "get request url:" + url);
+            Util.logi(TAG,"get request url:"+url);
             conn = (HttpURLConnection) httpUrl.openConnection();
             //设置可以接收数据
             conn.setDoInput(true);
@@ -373,7 +373,7 @@ public class HttpCoreThread extends Thread {
      * 将参数转换为GET请求格式的字符串
      * @param params 请求的参数
      * @return
-     * @throws java.io.UnsupportedEncodingException
+     * @throws UnsupportedEncodingException
      */
     public String paramsToString(HashMap<String, Object> params,ArrayList<String> removeKey) throws UnsupportedEncodingException{
         if(params == null){

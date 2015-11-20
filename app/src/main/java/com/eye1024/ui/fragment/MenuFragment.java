@@ -23,6 +23,8 @@ import com.rey.material.widget.Switch;
 
 import java.io.File;
 
+//import net.youmi.android.AdManager;
+//import net.youmi.android.offers.OffersManager;
 
 /**
  * 菜单的Fragment
@@ -30,6 +32,9 @@ import java.io.File;
  */
 public class MenuFragment extends BaseFragment {
 
+//    static {
+//        System.loadLibrary("Token");
+//    }
 
     private Button clean;
     private DiskCache diskCache = null;
@@ -46,6 +51,10 @@ public class MenuFragment extends BaseFragment {
      * 菜单被点击的监听
      */
     private OnMenuClick menuClick;
+
+//    public native String getAPPID();
+//
+//    public native String getPOITID();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -145,6 +154,7 @@ public class MenuFragment extends BaseFragment {
         }
     }
 
+    @Override
     protected void iniData() {
 
     }

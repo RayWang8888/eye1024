@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/arc_progress_margin"
+    android:paddingRight="@dimen/arc_progress_margin">
+<!--
+    <com.raywang.view.ArcProgress
+
+        android:id="@+id/donut_progress"
+        android:layout_width="@dimen/arc_progress"
+        android:layout_height="@dimen/arc_progress"
+        app:arc_bottom_text="@string/arc_bottom_text"
+        app:arc_unfinished_color="#ffffff"
+        app:arc_finished_color="@color/pro_color"/>-->
+</FrameLayout>

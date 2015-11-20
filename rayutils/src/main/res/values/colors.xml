@@ -7,4 +7,7 @@
     <color name="enabled_text_color">#b3b3b3</color>
 
     <color name="divider">#b3b3b3</color>
+    <color name="main_color">#248528</color>
+
+    <color name="black_p50">#7f000000</color>
 </resources>

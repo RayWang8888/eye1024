@@ -2,10 +2,15 @@ package com.raywang.rayutils;
 
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.rey.material.app.Dialog;
+import com.rey.material.app.SimpleDialog;
 
 /**
  * Created by Ray Wang on 2015/6/17.
@@ -76,4 +81,7 @@ public class UIHlep {
         wm.getDefaultDisplay().getMetrics(metrics);
         return metrics;
     }
+
+
+
 }

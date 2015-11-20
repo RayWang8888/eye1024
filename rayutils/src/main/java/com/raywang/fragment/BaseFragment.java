@@ -5,9 +5,12 @@ import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.raywang.rayutils.R;
 
 /**
  * 为了处理一些共用的地方的Fragment的基类
@@ -19,10 +22,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     private boolean isVisibleToUser = false;
     /** 是否已经获取了数据*/
     private boolean isIniData = false;
+    private View view;
     @Nullable
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState,int layoutId) {
         View view = inflater.inflate(layoutId,container,false);
+        this.view = view;
         iniView(view);
         if(isVisibleToUser && !isIniData && getActivity() != null){
             iniData();
@@ -50,7 +55,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void setUserVisibleHint(boolean isVisibleToUser) {
         this.isVisibleToUser = isVisibleToUser;
         if(!isIniData && isVisibleToUser && getActivity() != null){
-            iniData();
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    iniData();
+                }
+            },100);
         }
         super.setUserVisibleHint(isVisibleToUser);
     }

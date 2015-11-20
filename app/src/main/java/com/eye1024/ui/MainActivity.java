@@ -38,7 +38,6 @@ import com.rey.material.widget.TabPageIndicator;
 
 import java.util.ArrayList;
 
-//import net.youmi.android.offers.OffersManager;
 
 /**
  * 主界面activity
@@ -72,6 +71,7 @@ public class MainActivity extends BaseActivity {
 
     private ArticleFragment[] fragments;
 
+//    private GetTypeAsync async;
     /** 获取分类的线程对象*/
     private HttpCoreThread httpCoreThread;
 
@@ -81,6 +81,8 @@ public class MainActivity extends BaseActivity {
     private final static int CHECKREQUESTCODE = 1;
     /** 版本检测的线程对象*/
     private HttpCoreThread checkThread;
+    /** 多线程更新的下载对象*/
+    private ThreadDown down;
     /** 新版本提示的Dialog*/
     private Dialog dialog;
     private HttpCoreThread.HttpListener httpListener = new HttpCoreThread.HttpListener() {
@@ -331,20 +333,20 @@ public class MainActivity extends BaseActivity {
                 PackageInfo info = getPackageManager().getPackageInfo(this.getPackageName(), 0);
                 if(result.getData() != null && result.getData().getVersion() > info.versionCode){
                     //有新版本了
-                    dialog = DialogHelp.showOkAndCancel("有新版"+result.getData().getVersionname()+"是否更新",
-                           "大小："+result.getData().getSize()+"\n"+
-                                   result.getData().getDes(),"更新","取消",this,new View.OnClickListener(){
+                    dialog = DialogHelp.showOkAndCancel("有新版" + result.getData().getVersionname() + "是否更新",
+                            "大小：" + result.getData().getSize() + "\n" +
+                                    result.getData().getDes(), "更新", "取消", this, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     int id = v.getId();
-                                    if(id == Dialog.ACTION_POSITIVE){
+                                    if (id == Dialog.ACTION_POSITIVE) {
                                         //更新
                                         Intent intent = new Intent(MainActivity.this, DownService.class);
-                                        intent.putExtra("type",DownService.DOWN);
-                                        intent.putExtra("url",result.getData().getUrl());
+                                        intent.putExtra("type", DownService.DOWN);
+                                        intent.putExtra("url", result.getData().getUrl());
                                         startService(intent);
                                         dialog.dismiss();
-                                    }else{
+                                    } else {
                                         dialog.dismiss();
                                     }
 
@@ -362,7 +364,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        fragments[pager.getCurrentItem()].onActivityResult(requestCode,resultCode,data);
+        if(requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            fragments[pager.getCurrentItem()].onActivityResult(requestCode, resultCode, data);
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

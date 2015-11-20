@@ -1,5 +1,8 @@
 package com.raywang.rayutils;
 
+import android.os.Handler;
+import android.os.Message;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -111,10 +115,9 @@ public class HttpUtil {
             url += paramsToString(params);
 			httpUrl = new URL(url);
 
-            if(ISDEBUG){
 
-                Util.logi(TAG,"get request url:"+url);
-            }
+            Util.logi(TAG,"get request url:"+url);
+
 			conn = (HttpURLConnection) httpUrl.openConnection();
 			//设置可以接收数据
 			conn.setDoInput(true);
@@ -156,19 +159,76 @@ public class HttpUtil {
 		}
 		return null;
 	}
-	
+
+    public static String get(String url,Message m,Handler handler){
+        URL httpUrl = null;
+        HttpURLConnection conn = null;
+        InputStreamReader isr;
+        int code = 0;
+        try {
+            httpUrl = new URL(url);
+            Util.logi(TAG,"get request url:"+url);
+            conn = (HttpURLConnection) httpUrl.openConnection();
+            //设置可以接收数据
+            conn.setDoInput(true);
+            //设置可以输出数据
+            conn.setDoOutput(true);
+            //设置连接超时时间
+            conn.setConnectTimeout(TIMEOUT);
+            //设置获取数据超时时间
+            conn.setReadTimeout(READTIMEOUT);
+            //设置请求方式
+            conn.setRequestMethod("GET");
+            //设置请求的编码格式
+            conn.setRequestProperty("Accept-Charset", CHARSET);
+
+            code = conn.getResponseCode();
+            Util.logi(TAG,"response code:"+code);
+            if(code == 200){
+                isr = new InputStreamReader(conn.getInputStream());
+                StringBuffer sb = new StringBuffer();
+                char[] buf = new char[1024];
+                int len = 0;
+                while((len=isr.read(buf,0,1024)) > 0){
+                    sb.append(buf,0,len);
+                }
+                isr.close();
+                Util.logi(TAG,sb.toString());
+                return sb.toString();
+            }
+        }catch (Exception e){
+            m.getData().putInt("code",1);
+            m.getData().putInt("responseCode",code);
+            m.getData().putString("e", e.getMessage());
+            m.what = HttpCoreThread.ONERROR;
+            handler.sendMessage(m);
+            e.printStackTrace();
+        }finally{
+            if(conn != null) {
+                conn.disconnect();
+            }
+        }
+        return null;
+    }
+
+    public static String paramsToString(HashMap<String, Object> params) throws UnsupportedEncodingException{
+        return paramsToString(params,null);
+    }
 	/**
 	 * 将参数转换为GET请求格式的字符串
 	 * @param params 请求的参数
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
-	private static String paramsToString(HashMap<String, Object> params) throws UnsupportedEncodingException{
+	public static String paramsToString(HashMap<String, Object> params,ArrayList<String> removeKey) throws UnsupportedEncodingException{
 		if(params == null){
 			return "";
 		}
 		String str = "";
 		for(Entry<String, Object> entry : params.entrySet()){
+            if(removeKey != null && removeKey.contains(entry.getKey())){
+                continue;
+            }
 			str +=entry.getKey()+"="+URLEncoder.encode(entry.getValue().toString(),CHARSET)+"&";
 		}
 		str = str.substring(0,str.length() - 1);
